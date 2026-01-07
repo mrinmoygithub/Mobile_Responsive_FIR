@@ -783,6 +783,314 @@
                     <h3>Accused Details <span class="required">*</span></h3>
                     <i class="fa-solid fa-angles-right"></i>
                 </div>
+                <div class="accordion-content">
+                    <div class="accused-form-wrapper">
+                        <!-- Top Section with Title and Controls -->
+                        <div class="accused-header-section">
+                            <div class="accused-header-left">
+                                <h4 class="accused-title">Accused Details <span class="required">*</span></h4>
+                            </div>
+                            <div class="accused-header-right">
+                                <div class="form-group">
+                                    <label>Select Category</label>
+                                    <select class="form-control">
+                                        <option value="">-- Select Category --</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Select File</label>
+                                    <button type="button" class="btn-upload"><i class="fas fa-cloud-upload-alt"></i> Upload</button>
+                                </div>
+                                <div class="accused-records-count">
+                                    <span>1 Accused Detail Records</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Personal Details Section -->
+                        <div class="card inner-card">
+                            <h4 class="card-title">Personal Details</h4>
+                            <div class="grid grid-4">
+                                <div class="form-group">
+                                    <label class="required-field">Accused Type</label>
+                                    <div class="flex-between">
+                                        <select class="form-control">
+                                            <option value="Suspect" selected>Suspect</option>
+                                            <option value="Accused">Accused</option>
+                                        </select>
+                                        <a href="#" class="field-link">Enter Physical Features</a>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="required-field">Name</label>
+                                    <input type="text" class="form-control" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>Surname</label>
+                                    <input type="text" class="form-control" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>Alias Name</label>
+                                    <input type="text" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="grid grid-4">
+                                <div class="form-group">
+                                    <label>Relation Type</label>
+                                    <select class="form-control">
+                                        <option value="">-- Select Relation Type --</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Father/Spouse/Guardian/Mother Name</label>
+                                    <input type="text" class="form-control" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label class="required-field">Gender</label>
+                                    <select class="form-control">
+                                        <option value="">-- Select Gender --</option>
+                                        <option>Male</option>
+                                        <option>Female</option>
+                                        <option>Other</option>
+                                    </select>
+                                </div>
+                                <div class="form-group date-icon">
+                                    <label>Date of Birth</label>
+                                    <input type="text" class="form-control datetime-picker" id="dobAccused" placeholder="Select date">
+                                    <i class="far fa-calendar-alt"></i>
+                                </div>
+                            </div>
+                            <div class="grid grid-4">
+                                <div class="form-group">
+                                    <label>Age</label>
+                                    <input type="text" class="form-control" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>Occupation</label>
+                                    <select class="form-control">
+                                        <option value="">-- Select Occupation --</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Educational Qualification</label>
+                                    <select class="form-control">
+                                        <option value="">-- Select Qualification --</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Caste</label>
+                                    <select class="form-control">
+                                        <option value="">-- Select Caste --</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="grid grid-4">
+                                <div class="form-group">
+                                    <label>Sub Caste</label>
+                                    <select class="form-control">
+                                        <option value="">-- Select Sub Caste --</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Religion</label>
+                                    <select class="form-control">
+                                        <option value="">-- Select Religion --</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="required-field">Nationality</label>
+                                    <select class="form-control">
+                                        <option value="">-- Select Nationality --</option>
+                                        <option>Indian</option>
+                                        <option>Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Present Address Section -->
+                        <div class="card inner-card">
+                            <h4 class="card-title">Present Address</h4>
+                            <div class="grid grid-4">
+                                <div class="form-group">
+                                    <label>House No</label>
+                                    <input type="text" class="form-control" id="accusedPresentHouseNo" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>Street/Road No</label>
+                                    <input type="text" class="form-control" id="accusedPresentStreet" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>Ward/Colony</label>
+                                    <input type="text" class="form-control" id="accusedPresentWard" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>Landmark/Milestone</label>
+                                    <input type="text" class="form-control" id="accusedPresentLandmark" placeholder="">
+                                </div>
+                            </div>
+                            <div class="grid grid-4">
+                                <div class="form-group">
+                                    <label>Residency Type</label>
+                                    <select class="form-control" id="accusedPresentResidency">
+                                        <option value="">-- Select Residency Type --</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Country</label>
+                                    <select class="form-control" id="accusedPresentCountry">
+                                        <option value="India" selected>India</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>State/UT</label>
+                                    <select class="form-control" id="accusedPresentState">
+                                        <option value="">-- Select State/UT --</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>District</label>
+                                    <select class="form-control" id="accusedPresentDistrict">
+                                        <option value="">-- Select District --</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="grid grid-4">
+                                <div class="form-group">
+                                    <label>Area/Mandal</label>
+                                    <input type="text" class="form-control" id="accusedPresentArea" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>Locality/Village</label>
+                                    <input type="text" class="form-control" id="accusedPresentLocality" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>PIN Code</label>
+                                    <input type="text" class="form-control" id="accusedPresentPin" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Permanent Address Section -->
+                        <div class="card inner-card">
+                            <div class="flex-between mb-3">
+                                <h4 class="card-title">Permanent Address</h4>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="accusedSameAsPresent">
+                                    <span>Use same as Present</span>
+                                </label>
+                            </div>
+                            <div class="grid grid-4">
+                                <div class="form-group">
+                                    <label>House No</label>
+                                    <input type="text" class="form-control" id="accusedPermanentHouseNo" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>Street/Road No</label>
+                                    <input type="text" class="form-control" id="accusedPermanentStreet" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>Ward/Colony</label>
+                                    <input type="text" class="form-control" id="accusedPermanentWard" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>Landmark/Milestone</label>
+                                    <input type="text" class="form-control" id="accusedPermanentLandmark" placeholder="">
+                                </div>
+                            </div>
+                            <div class="grid grid-4">
+                                <div class="form-group">
+                                    <label>Residency Type</label>
+                                    <select class="form-control" id="accusedPermanentResidency">
+                                        <option value="">-- Select Residency Type --</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Country</label>
+                                    <select class="form-control" id="accusedPermanentCountry">
+                                        <option value="India" selected>India</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>State/UT</label>
+                                    <select class="form-control" id="accusedPermanentState">
+                                        <option value="">-- Select State/UT --</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>District</label>
+                                    <select class="form-control" id="accusedPermanentDistrict">
+                                        <option value="">-- Select District --</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="grid grid-4">
+                                <div class="form-group">
+                                    <label>Area/Mandal</label>
+                                    <input type="text" class="form-control" id="accusedPermanentArea" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>Locality/Village</label>
+                                    <input type="text" class="form-control" id="accusedPermanentLocality" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>PIN Code</label>
+                                    <input type="text" class="form-control" id="accusedPermanentPin" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Contact and Identity Proof Section -->
+                        <div class="card inner-card">
+                            <h4 class="card-title">Contact and Identity Details</h4>
+                            <div class="grid grid-4">
+                                <div class="form-group">
+                                    <label>Phone Number</label>
+                                    <div class="phone-input-wrapper">
+                                        <select class="phone-code">
+                                            <option value="91" selected>91</option>
+                                        </select>
+                                        <input type="text" class="form-control phone-number" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Email ID</label>
+                                    <input type="email" class="form-control" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>Identity Type</label>
+                                    <select class="form-control">
+                                        <option value="">-- Select Identity Type --</option>
+                                        <option>Aadhaar</option>
+                                        <option>PAN</option>
+                                        <option>Driving License</option>
+                                        <option>Voter ID</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Identity Number</label>
+                                    <input type="text" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="grid grid-4">
+                                <div class="form-group">
+                                    <label>Identity Proof</label>
+                                    <button type="button" class="btn-upload"><i class="fas fa-camera"></i> Select File</button>
+                                </div>
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <button type="button" class="btn-add-identity"><i class="fas fa-plus"></i> Add Another</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bottom Action Buttons -->
+                        <div class="accused-action-buttons">
+                            <button class="btn btn-primary"><i class="fas fa-save"></i> SAVE</button>
+                            <a href="#" class="btn-link">Reset</a>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Victim Details -->
@@ -790,6 +1098,321 @@
                 <div class="accordion-header">
                     <h3>Victim Details</h3>
                     <i class="fa-solid fa-angles-right"></i>
+                </div>
+                <div class="accordion-content">
+                    <div class="accused-form-wrapper">
+                        <!-- Top Section with Title and Controls -->
+                        <div class="accused-header-section">
+                            <div class="accused-header-left">
+                                <h4 class="accused-title">Victim Details</h4>
+                            </div>
+                            <div class="accused-header-right">
+                                <div class="form-group">
+                                    <label>Select Category</label>
+                                    <select class="form-control">
+                                        <option value="">-- Select Category --</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="required-field">Select File</label>
+                                    <button type="button" class="btn-upload"><i class="fas fa-file-alt"></i> Upload</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Personal Details Section -->
+                        <div class="card inner-card">
+                            <h4 class="card-title">Personal Details</h4>
+                            <div class="grid grid-4">
+                                <div class="form-group">
+                                    <label>Victim Type</label>
+                                    <div class="flex-between">
+                                        <select class="form-control">
+                                            <option value="">-- Select Victim Type --</option>
+                                            <option value="Missing" selected>Missing</option>
+                                            <option value="Injured">Injured</option>
+                                            <option value="Deceased">Deceased</option>
+                                        </select>
+                                        <a href="#" class="field-link">Enter Physical Features</a>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="required-field">Name</label>
+                                    <input type="text" class="form-control" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>Surname</label>
+                                    <input type="text" class="form-control" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>Alias Name</label>
+                                    <input type="text" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="grid grid-4">
+                                <div class="form-group">
+                                    <label>Relation Type</label>
+                                    <select class="form-control">
+                                        <option value="">-- Select Relation Type --</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Father/Spouse/Guardian/Mother Name</label>
+                                    <input type="text" class="form-control" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label class="required-field">Gender</label>
+                                    <select class="form-control">
+                                        <option value="">-- Select Gender --</option>
+                                        <option>Male</option>
+                                        <option>Female</option>
+                                        <option>Human Skeleton</option>
+                                        <option>Other</option>
+                                    </select>
+                                </div>
+                                <div class="form-group date-icon">
+                                    <label>Date of Birth</label>
+                                    <input type="text" class="form-control datetime-picker" id="dobVictim" placeholder="Select date">
+                                    <i class="far fa-calendar-alt"></i>
+                                </div>
+                            </div>
+                            <div class="grid grid-4">
+                                <div class="form-group">
+                                    <label class="required-field">Age</label>
+                                    <input type="text" class="form-control" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>Occupation</label>
+                                    <select class="form-control">
+                                        <option value="">-- Select Occupation --</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Educational Qualification</label>
+                                    <select class="form-control">
+                                        <option value="">-- Select Qualification --</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Caste</label>
+                                    <select class="form-control">
+                                        <option value="">-- Select Caste --</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="grid grid-4">
+                                <div class="form-group">
+                                    <label>Sub Caste</label>
+                                    <select class="form-control">
+                                        <option value="">-- Select Sub Caste --</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Religion</label>
+                                    <select class="form-control">
+                                        <option value="">-- Select Religion --</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="required-field">Nationality</label>
+                                    <select class="form-control">
+                                        <option value="">-- Select Nationality --</option>
+                                        <option>Indian</option>
+                                        <option>Andorra</option>
+                                        <option>Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Present Address Section -->
+                        <div class="card inner-card">
+                            <h4 class="card-title">Present Address</h4>
+                            <div class="grid grid-4">
+                                <div class="form-group">
+                                    <label>House No</label>
+                                    <input type="text" class="form-control" id="victimPresentHouseNo" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>Street/Road No</label>
+                                    <input type="text" class="form-control" id="victimPresentStreet" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label class="required-field">Ward/Colony</label>
+                                    <input type="text" class="form-control" id="victimPresentWard" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>Landmark/Milestone</label>
+                                    <input type="text" class="form-control" id="victimPresentLandmark" placeholder="">
+                                </div>
+                            </div>
+                            <div class="grid grid-4">
+                                <div class="form-group">
+                                    <label>Residency Type</label>
+                                    <select class="form-control" id="victimPresentResidency">
+                                        <option value="">-- Select Residency Type --</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="required-field">Country</label>
+                                    <select class="form-control" id="victimPresentCountry">
+                                        <option value="India" selected>India</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="required-field">State/UT</label>
+                                    <select class="form-control" id="victimPresentState">
+                                        <option value="">-- Select State/UT --</option>
+                                        <option>BIHAR</option>
+                                        <option>ANDHRA PRADESH</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="required-field">District</label>
+                                    <select class="form-control" id="victimPresentDistrict">
+                                        <option value="">-- Select District --</option>
+                                        <option>CUDDAPAH</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="grid grid-4">
+                                <div class="form-group">
+                                    <label class="required-field">Area/Mandal</label>
+                                    <input type="text" class="form-control" id="victimPresentArea" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>Locality/Village</label>
+                                    <input type="text" class="form-control" id="victimPresentLocality" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>PIN Code</label>
+                                    <input type="text" class="form-control" id="victimPresentPin" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Permanent Address Section -->
+                        <div class="card inner-card">
+                            <div class="flex-between mb-3">
+                                <h4 class="card-title">Permanent Address</h4>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="victimSameAsPresent">
+                                    <span>Use same as Present</span>
+                                </label>
+                            </div>
+                            <div class="grid grid-4">
+                                <div class="form-group">
+                                    <label>House No</label>
+                                    <input type="text" class="form-control" id="victimPermanentHouseNo" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>Street/Road No</label>
+                                    <input type="text" class="form-control" id="victimPermanentStreet" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label class="required-field">Ward/Colony</label>
+                                    <input type="text" class="form-control" id="victimPermanentWard" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>Landmark/Milestone</label>
+                                    <input type="text" class="form-control" id="victimPermanentLandmark" placeholder="">
+                                </div>
+                            </div>
+                            <div class="grid grid-4">
+                                <div class="form-group">
+                                    <label>Residency Type</label>
+                                    <select class="form-control" id="victimPermanentResidency">
+                                        <option value="">-- Select Residency Type --</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="required-field">Country</label>
+                                    <select class="form-control" id="victimPermanentCountry">
+                                        <option value="India" selected>India</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="required-field">State/UT</label>
+                                    <select class="form-control" id="victimPermanentState">
+                                        <option value="">-- Select State/UT --</option>
+                                        <option>BIHAR</option>
+                                        <option>ANDHRA PRADESH</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="required-field">District</label>
+                                    <select class="form-control" id="victimPermanentDistrict">
+                                        <option value="">-- Select District --</option>
+                                        <option>CUDDAPAH</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="grid grid-4">
+                                <div class="form-group">
+                                    <label class="required-field">Area/Mandal</label>
+                                    <input type="text" class="form-control" id="victimPermanentArea" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>Locality/Village</label>
+                                    <input type="text" class="form-control" id="victimPermanentLocality" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>PIN Code</label>
+                                    <input type="text" class="form-control" id="victimPermanentPin" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Contact and Identity Proof Section -->
+                        <div class="card inner-card">
+                            <h4 class="card-title">Contact and Identity Details</h4>
+                            <div class="grid grid-4">
+                                <div class="form-group">
+                                    <label>Phone Number</label>
+                                    <div class="phone-input-wrapper">
+                                        <select class="phone-code">
+                                            <option value="91" selected>91</option>
+                                        </select>
+                                        <input type="text" class="form-control phone-number" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Email ID</label>
+                                    <input type="email" class="form-control" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>Identity Type</label>
+                                    <select class="form-control">
+                                        <option value="">-- Select Identity Type --</option>
+                                        <option>Aadhaar</option>
+                                        <option>PAN</option>
+                                        <option>Driving License</option>
+                                        <option>Voter ID</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Identity Number</label>
+                                    <input type="text" class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <div class="grid grid-4">
+                                <div class="form-group">
+                                    <label>Identity Proof</label>
+                                    <button type="button" class="btn-upload"><i class="fas fa-camera"></i> Select File</button>
+                                </div>
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <button type="button" class="btn-add-identity"><i class="fas fa-plus"></i> Add Another</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bottom Action Buttons -->
+                        <div class="accused-action-buttons">
+                            <button class="btn btn-primary"><i class="fas fa-save"></i> SAVE</button>
+                            <a href="#" class="btn-link">Reset</a>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -1090,8 +1713,8 @@
         // Initialize all datetime pickers
         document.querySelectorAll('.datetime-picker').forEach(function(input) {
             if (!input.readOnly) {
-                // Use date-only config for DOB field
-                const config = input.id === 'dobComplainant' ? dateOnlyPickerConfig : datetimePickerConfig;
+                // Use date-only config for DOB fields
+                const config = (input.id === 'dobComplainant' || input.id === 'dobAccused' || input.id === 'dobVictim') ? dateOnlyPickerConfig : datetimePickerConfig;
                 const picker = flatpickr(input, config);
                 
                 // Make calendar icon clickable
@@ -1104,7 +1727,7 @@
             }
         });
 
-        // "Use same as Present" checkbox functionality
+        // "Use same as Present" checkbox functionality for Complainant
         const sameAsPresentCheckbox = document.getElementById('sameAsPresent');
         if (sameAsPresentCheckbox) {
             sameAsPresentCheckbox.addEventListener('change', function() {
@@ -1133,6 +1756,92 @@
                         if (isChecked) {
                             // Copy value from present to permanent
                             permanentField.value = presentField.value;
+                            permanentField.disabled = true;
+                        } else {
+                            // Enable permanent field
+                            permanentField.disabled = false;
+                        }
+                    }
+                });
+            });
+        }
+
+        // "Use same as Present" checkbox functionality for Accused
+        const accusedSameAsPresentCheckbox = document.getElementById('accusedSameAsPresent');
+        if (accusedSameAsPresentCheckbox) {
+            accusedSameAsPresentCheckbox.addEventListener('change', function() {
+                const isChecked = this.checked;
+                
+                // Field mapping: present address field IDs to permanent address field IDs for Accused
+                const fieldMapping = [
+                    { present: 'accusedPresentHouseNo', permanent: 'accusedPermanentHouseNo' },
+                    { present: 'accusedPresentStreet', permanent: 'accusedPermanentStreet' },
+                    { present: 'accusedPresentWard', permanent: 'accusedPermanentWard' },
+                    { present: 'accusedPresentLandmark', permanent: 'accusedPermanentLandmark' },
+                    { present: 'accusedPresentResidency', permanent: 'accusedPermanentResidency' },
+                    { present: 'accusedPresentCountry', permanent: 'accusedPermanentCountry' },
+                    { present: 'accusedPresentState', permanent: 'accusedPermanentState' },
+                    { present: 'accusedPresentDistrict', permanent: 'accusedPermanentDistrict' },
+                    { present: 'accusedPresentArea', permanent: 'accusedPermanentArea' },
+                    { present: 'accusedPresentLocality', permanent: 'accusedPermanentLocality' },
+                    { present: 'accusedPresentPin', permanent: 'accusedPermanentPin' }
+                ];
+                
+                fieldMapping.forEach(mapping => {
+                    const presentField = document.getElementById(mapping.present);
+                    const permanentField = document.getElementById(mapping.permanent);
+                    
+                    if (presentField && permanentField) {
+                        if (isChecked) {
+                            // Copy value from present to permanent
+                            if (presentField.tagName === 'SELECT') {
+                                permanentField.value = presentField.value;
+                            } else {
+                                permanentField.value = presentField.value;
+                            }
+                            permanentField.disabled = true;
+                        } else {
+                            // Enable permanent field
+                            permanentField.disabled = false;
+                        }
+                    }
+                });
+            });
+        }
+
+        // "Use same as Present" checkbox functionality for Victim
+        const victimSameAsPresentCheckbox = document.getElementById('victimSameAsPresent');
+        if (victimSameAsPresentCheckbox) {
+            victimSameAsPresentCheckbox.addEventListener('change', function() {
+                const isChecked = this.checked;
+                
+                // Field mapping: present address field IDs to permanent address field IDs for Victim
+                const fieldMapping = [
+                    { present: 'victimPresentHouseNo', permanent: 'victimPermanentHouseNo' },
+                    { present: 'victimPresentStreet', permanent: 'victimPermanentStreet' },
+                    { present: 'victimPresentWard', permanent: 'victimPermanentWard' },
+                    { present: 'victimPresentLandmark', permanent: 'victimPermanentLandmark' },
+                    { present: 'victimPresentResidency', permanent: 'victimPermanentResidency' },
+                    { present: 'victimPresentCountry', permanent: 'victimPermanentCountry' },
+                    { present: 'victimPresentState', permanent: 'victimPermanentState' },
+                    { present: 'victimPresentDistrict', permanent: 'victimPermanentDistrict' },
+                    { present: 'victimPresentArea', permanent: 'victimPermanentArea' },
+                    { present: 'victimPresentLocality', permanent: 'victimPermanentLocality' },
+                    { present: 'victimPresentPin', permanent: 'victimPermanentPin' }
+                ];
+                
+                fieldMapping.forEach(mapping => {
+                    const presentField = document.getElementById(mapping.present);
+                    const permanentField = document.getElementById(mapping.permanent);
+                    
+                    if (presentField && permanentField) {
+                        if (isChecked) {
+                            // Copy value from present to permanent
+                            if (presentField.tagName === 'SELECT') {
+                                permanentField.value = presentField.value;
+                            } else {
+                                permanentField.value = presentField.value;
+                            }
                             permanentField.disabled = true;
                         } else {
                             // Enable permanent field
