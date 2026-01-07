@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHO Homepage - FIR Form</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome (CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="app-header">
+        <div class="header-overlay"></div>
+        <div class="header-container">
+            <div class="header-left">
+                <button class="menu-toggle" aria-label="Toggle Menu">
+                    <span class="menu-icon" aria-hidden="true"></span>
+                </button>
+                <div class="brand">
+                    <img src="assets/logo.png" alt="Telangana State Police" class="brand-logo">
+                    <div class="brand-text">
+                        <h3>SHO HOMEPAGE</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="header-center">
+                <div class="search-bar">
+                    <div class="search-input-wrapper">
+                        <select class="search-type">
+                            <option>FIR</option>
+                        </select>
+                        <input type="text" placeholder="Search FIR">
+                        <button class="search-btn"><i class="fas fa-search"></i></button>
+                    </div>
+                    <button class="btn-enterprise">Enterprise Search</button>
+                </div>
+            </div>
+
+            <div class="header-right">
+                <div class="user-profile">
+                    <div class="user-details">
+                        <span class="user-name">GUDI PAVAN KUMAR REDDY</span>
+                        <span class="user-role">STATION HOUSE OFFICER (SHO)</span>
+                        <span class="user-loc">Moinabad PS(Cyberabad)</span>
+                    </div>
+                    <div class="user-avatar-wrapper">
+                        <i class="fas fa-user-circle user-avatar"></i>
+                        <i class="fas fa-caret-down dropdown-icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        
+        <!-- Controls Bar -->
+        <div class="controls-bar">
+            <div class="controls-left">
+                <h2 class="page-heading">FIR</h2>
+                <div class="fir-options">
+                    <span class="option-label">FIR Type</span>
+                    <label class="radio-label">
+                        <input type="radio" name="fir_type" checked>
+                        <span class="radio-custom"></span>
+                        REGULAR FIR
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="fir_type">
+                        <span class="radio-custom"></span>
+                        ZERO FIR
+                    </label>
+                </div>
+                <div class="prev-fir">
+                    Previous FIR : 0/2026
+                </div>
+            </div>
+            <div class="controls-right">
+                <button class="btn btn-link">Cancel</button>
+                <button class="btn btn-primary">Print Draft Copy</button>
+                <button class="btn btn-primary">Save Draft</button>
+                <button class="btn btn-success">Generate FIR</button>
+            </div>
+        </div>
+
+        <!-- Form Container -->
+        <div class="form-container">
+            
+            <!-- Acts & Sections -->
+            <div class="accordion-item collapsed">
+                <div class="accordion-header">
+                    <h3>Acts & Sections <span class="required">*</span></h3>
+                    <i class="fa-solid fa-angles-right"></i>
+                </div>
+                <div class="accordion-content">
+                    
+                    <!-- Top Row -->
+                    <div class="grid grid-4">
+                        <div class="form-group">
+                            <label class="required-field">Crime Type</label>
+                            <select class="form-control" id="crimeType">
+                                <option value="">-- Select Crime Type --</option>
+                                <option>Crime Against SC/ST</option>
+                                <option>Crime Against Property</option>
+                                <option>Crime Against Person</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="required-field">Crime Sub Type</label>
+                            <select class="form-control" id="crimeSubType" disabled>
+                                <option value="">-- Select Crime Sub Type --</option>
+                                <option>Corona Outbreak</option>
+                                <option>Theft</option>
+                                <option>Assault</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Petition Number</label>
+                            <input type="text" class="form-control" value="3423">
+                        </div>
+                        <div class="form-group">
+                            <label class="required-field">Gravity</label>
+                            <select class="form-control">
+                                <option value="">-- Select Gravity --</option>
+                                <option>Non Grave</option>
+                                <option>Grave</option>
+                                <option>Very Grave</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Offence Occurrence Card -->
+                    <div class="card inner-card">
+                        <h4 class="card-title">Offence Occurrence Date & Time</h4>
+                        <div class="grid grid-4">
+                            <div class="form-group date-icon">
+                                <label>From Date</label>
+                                <input type="text" class="form-control datetime-picker" id="fromDate" value="05-01-2026 18:02:29">
+                                <i class="far fa-calendar-alt"></i>
+                            </div>
+                            <div class="form-group date-icon">
+                                <label>To Date</label>
+                                <input type="text" class="form-control datetime-picker" id="toDate" value="05-01-2026 19:02:40">
+                                <i class="far fa-calendar-alt"></i>
+                            </div>
+                            <div class="form-group">
+                                <label>Time Period</label>
+                                <input type="text" class="form-control" value="0">
+                            </div>
+                            <div class="form-group date-icon">
+                                <label>Prior To</label>
+                                <input type="text" class="form-control datetime-picker" id="priorTo" placeholder="Select Date and Time">
+                                <i class="far fa-calendar-alt"></i>
+                            </div>
+                        </div>
+                        <div class="info-note">
+                            <i class="fas fa-info-circle"></i> Note: Please select either From Date / To Date / From Date & To Date / Prior To date to add Acts & Sections.
+                        </div>
+                    </div>
+
+                    <!-- Offence Information Received Card -->
+                    <div class="card inner-card">
+                        <h4 class="card-title">Offence Information Received</h4>
+                        <div class="grid grid-5-custom">
+                            <div class="form-group date-icon">
+                                <label class="required-field">Information Received at PS</label>
+                                <input type="text" class="form-control datetime-picker" id="infoReceivedDate" value="05-01-2026 20:02:49">
+                                <i class="far fa-calendar-alt"></i>
+                            </div>
+                            <div class="form-group">
+                                <label class="required-field">Information Type</label>
+                                <select class="form-control">
+                                    <option value="">-- Select Information Type --</option>
+                                    <option>Oral</option>
+                                    <option>Written</option>
+                                    <option>Electronic</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="required-field">GD Number</label>
+                                <input type="text" class="form-control disabled" value="34234" readonly>
+                                <a href="#" class="field-link">GD Entry</a>
+                            </div>
+                            <div class="form-group date-icon">
+                                <label class="required-field">GD Date & Time</label>
+                                <input type="text" class="form-control disabled datetime-picker" id="gdDate" value="05-01-2026 22:03:04" readonly>
+                                <i class="far fa-calendar-alt"></i>
+                            </div>
+                            <div class="form-group date-icon">
+                                <label class="required-field">FIR Date & Time</label>
+                                <input type="text" class="form-control disabled datetime-picker" id="firDate" value="05-01-2026 23:03:25" readonly>
+                                <i class="far fa-calendar-alt"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group mt-3">
+                            <label class="required-field">Reason for Delay</label>
+                            <textarea class="form-control" rows="3">Test</textarea>
+                        </div>
+                    </div>
+
+                    <!-- Acts & Sections Mapping -->
+                    <div class="card inner-card no-border mt-3">
+                         <div class="grid grid-2">
+                             
+                             <!-- Left Col -->
+                             <div>
+                                 <div class="flex-between">
+                                     <h4 class="card-title">Acts & Sections</h4>
+                                     <a href="#" class="link-blue">Mapping of Acts ( Old vs New )</a>
+                                 </div>
+                                 <div class="grid grid-2-tight mt-2">
+                                     <div class="form-group">
+                                         <label class="required-field">Act</label>
+                                         <select class="form-control act-select"><option value="">-- Select Act --</option>
+                                             <option>IPC</option>
+                                             <option>CrPC</option>
+                                             <option>TSBTA</option>
+                                         </select>
+                                     </div>
+                                     <div class="form-group">
+                                         <label class="required-field">Section</label>
+                                         <div class="input-with-btn">
+                                             <select class="form-control section-select"><option value="">-- Select Section --</option>
+                                                 <option>Section 302</option>
+                                                 <option>Section 304</option>
+                                                 <option>Section 6</option>
+                                                 <option>Section 8</option>
+                                             </select>
+                                             <button class="btn-add" id="addSectionBtn"><i class="fas fa-plus"></i> Add</button>
+                                         </div>
+                                     </div>
+                                 </div>
+                                 <div class="checkbox-group mt-2">
+                                     <label><input type="checkbox"> R/W required</label>
+                                 </div>
+
+                                 <!-- Table -->
+                                 <table class="data-table mt-2" id="actsSectionsTable">
+                                     <thead>
+                                         <tr>
+                                             <th>S. NO</th>
+                                             <th>Act Description</th>
+                                             <th>Section</th>
+                                             <th>Actions</th>
+                                         </tr>
+                                     </thead>
+                                     <tbody id="actsSectionsTableBody">
+                                         <tr class="save-row">
+                                            <td colspan="4">
+                                                <button class="btn-save-sm"><i class="fas fa-save"></i> Save</button>
+                                            </td>
+                                         </tr>
+                                     </tbody>
+                                 </table>
+                             </div>
+
+                             <!-- Right Col -->
+                             <div class="pl-3 border-left-mobile">
+                                <h4 class="card-title">Major and Minor Classifications</h4>
+                                <div class="grid grid-2-tight mt-2">
+                                     <div class="form-group">
+                                         <label class="required-field">Major</label>
+                                         <select class="form-control major-select"><option value="">-- Select Major --</option>
+                                             <option>Abetment</option>
+                                             <option>Murder</option>
+                                             <option>Theft</option>
+                                         </select>
+                                     </div>
+                                      <div class="form-group">
+                                         <label class="required-field">Minor</label>
+                                         <div class="input-with-btn">
+                                             <select class="form-control minor-select"><option value="">-- Select Minor --</option>
+                                                 <option>Abetment</option>
+                                                 <option>Attempt</option>
+                                                 <option>Conspiracy</option>
+                                             </select>
+                                             <button class="btn-add" id="addMinorBtn"><i class="fas fa-plus"></i> Add</button>
+                                         </div>
+                                     </div>
+                                </div>
+                                <div class="checkbox-group mt-2">
+                                     <label><input type="checkbox" disabled> Primary Major</label>
+                                </div>
+                                
+                                <table class="data-table mt-4" id="majorMinorTable">
+                                     <thead class="bg-gray">
+                                         <tr>
+                                             <th>S. NO</th>
+                                             <th>Primary Major</th>
+                                             <th>Major Head</th>
+                                             <th>Minor Head</th>
+                                             <th>Actions</th>
+                                         </tr>
+                                     </thead>
+                                     <tbody id="majorMinorTableBody">
+                                         <!-- Rows will be added dynamically -->
+                                     </tbody>
+                                </table>
+                             </div>
+                         </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Collapsed Items -->
+            <div class="accordion-item collapsed">
+                <div class="accordion-header">
+                    <h3>Occurrence Of Offence <span class="required">*</span></h3>
+                    <i class="fa-solid fa-angles-right"></i>
+                </div>
+            </div>
+
+             <div class="accordion-item collapsed">
+                <div class="accordion-header">
+                    <h3>Complainant Details <span class="required">*</span></h3>
+                    <i class="fa-solid fa-angles-right"></i>
+                </div>
+            </div>
+
+            <div class="accordion-item collapsed">
+                <div class="accordion-header">
+                    <h3>Accused Details <span class="required">*</span></h3>
+                    <i class="fa-solid fa-angles-right"></i>
+                </div>
+            </div>
+
+            <div class="accordion-item collapsed">
+                <div class="accordion-header">
+                    <h3>Victim Details</h3>
+                    <i class="fa-solid fa-angles-right"></i>
+                </div>
+            </div>
+
+            <div class="accordion-item collapsed">
+                <div class="accordion-header">
+                    <h3>Property Details</h3>
+                    <i class="fa-solid fa-angles-right"></i>
+                </div>
+            </div>
+
+            <div class="accordion-item collapsed">
+                <div class="accordion-header">
+                     <h3>Brief Facts <span class="required">*</span></h3>
+                    <i class="fa-solid fa-angles-right"></i>
+                </div>
+            </div>
+
+            <div class="accordion-item collapsed">
+                <div class="accordion-header">
+                     <h3>Upload Documents <span class="required">*</span></h3>
+                    <i class="fa-solid fa-angles-right"></i>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="app-footer">
+        <div class="footer-content">
+            DESIGNED AND DEVELOPED BY <span class="company-name">Innoright <span class="solutions">SOLUTIONS</span></span>
+        </div>
+    </footer>
+
+    <!-- Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        // Simple Accordion Logic
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                
+                // Toggle current
+                if(item.classList.contains('expanded')) {
+                    item.classList.remove('expanded');
+                    item.classList.add('collapsed');
+                    header.querySelector('i').className = 'fa-solid fa-angles-right';
+                } else {
+                    item.classList.add('expanded');
+                    item.classList.remove('collapsed');
+                    header.querySelector('i').className = 'fa-solid fa-angles-down';
+                }
+            });
+        });
+
+        // Mobile Menu Toggle
+        document.querySelector('.menu-toggle').addEventListener('click', () => {
+             // Toggle logic for sidebar or simple alert for now
+             alert('Mobile Menu Toggle Clicked');
+        });
+
+        // Crime Type and Crime Sub Type Logic
+        const crimeTypeSelect = document.getElementById('crimeType');
+        const crimeSubTypeSelect = document.getElementById('crimeSubType');
+        
+        if (crimeTypeSelect && crimeSubTypeSelect) {
+            // Initially disable Crime Sub Type
+            crimeSubTypeSelect.disabled = true;
+            
+            crimeTypeSelect.addEventListener('change', function() {
+                if (this.value === '') {
+                    // If no crime type selected, disable and reset sub type
+                    crimeSubTypeSelect.disabled = true;
+                    crimeSubTypeSelect.value = '';
+                } else {
+                    // Enable sub type when crime type is selected
+                    crimeSubTypeSelect.disabled = false;
+                }
+            });
+        }
+
+        // Add Section Functionality
+        let sectionRowCount = 0;
+        const addSectionBtn = document.getElementById('addSectionBtn');
+        const actsSectionsTableBody = document.getElementById('actsSectionsTableBody');
+        
+        if (addSectionBtn) {
+            addSectionBtn.addEventListener('click', function() {
+                const actSelect = document.querySelector('.act-select');
+                const sectionSelect = document.querySelector('.section-select');
+                
+                const selectedAct = actSelect.value;
+                const selectedSection = sectionSelect.value;
+                
+                // Validate that both Act and Section are selected
+                if (!selectedAct || !selectedSection) {
+                    alert('Please select both Act and Section before adding.');
+                    return;
+                }
+                
+                // Get act description text
+                const actText = actSelect.options[actSelect.selectedIndex].text;
+                const sectionText = sectionSelect.options[sectionSelect.selectedIndex].text;
+                
+                sectionRowCount++;
+                
+                // Create new row
+                const newRow = document.createElement('tr');
+                newRow.className = 'data-row';
+                newRow.innerHTML = `
+                    <td>${sectionRowCount}</td>
+                    <td>${actText}</td>
+                    <td>${sectionText}</td>
+                    <td><a href="#" class="link-blue delete-row">Delete</a></td>
+                `;
+                
+                // Insert before the save row
+                const saveRow = actsSectionsTableBody.querySelector('.save-row');
+                actsSectionsTableBody.insertBefore(newRow, saveRow);
+                
+                // Add delete functionality
+                newRow.querySelector('.delete-row').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    newRow.remove();
+                    // Recalculate serial numbers
+                    updateSerialNumbers(actsSectionsTableBody);
+                    sectionRowCount--;
+                });
+                
+                // Reset dropdowns
+                actSelect.value = '';
+                sectionSelect.value = '';
+            });
+        }
+
+        // Add Minor Functionality
+        let minorRowCount = 0;
+        const addMinorBtn = document.getElementById('addMinorBtn');
+        const majorMinorTableBody = document.getElementById('majorMinorTableBody');
+        
+        if (addMinorBtn) {
+            addMinorBtn.addEventListener('click', function() {
+                const majorSelect = document.querySelector('.major-select');
+                const minorSelect = document.querySelector('.minor-select');
+                const primaryMajorCheckbox = document.querySelector('input[type="checkbox"]:not([disabled])');
+                
+                const selectedMajor = majorSelect.value;
+                const selectedMinor = minorSelect.value;
+                
+                // Validate that both Major and Minor are selected
+                if (!selectedMajor || !selectedMinor) {
+                    alert('Please select both Major and Minor before adding.');
+                    return;
+                }
+                
+                // Get text values
+                const majorText = majorSelect.options[majorSelect.selectedIndex].text;
+                const minorText = minorSelect.options[minorSelect.selectedIndex].text;
+                const isPrimaryMajor = primaryMajorCheckbox && primaryMajorCheckbox.checked ? 'Yes' : '';
+                
+                minorRowCount++;
+                
+                // Create new row
+                const newRow = document.createElement('tr');
+                newRow.className = 'data-row';
+                newRow.innerHTML = `
+                    <td>${minorRowCount}</td>
+                    <td>${isPrimaryMajor}</td>
+                    <td>${majorText}</td>
+                    <td>${minorText}</td>
+                    <td><a href="#" class="link-blue delete-row">Delete</a></td>
+                `;
+                
+                // Add to table
+                majorMinorTableBody.appendChild(newRow);
+                
+                // Add delete functionality
+                newRow.querySelector('.delete-row').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    newRow.remove();
+                    // Recalculate serial numbers
+                    updateSerialNumbers(majorMinorTableBody);
+                    minorRowCount--;
+                });
+                
+                // Reset dropdowns and checkbox
+                majorSelect.value = '';
+                minorSelect.value = '';
+                if (primaryMajorCheckbox) {
+                    primaryMajorCheckbox.checked = false;
+                }
+            });
+        }
+
+        // Function to update serial numbers in table
+        function updateSerialNumbers(tableBody) {
+            const rows = tableBody.querySelectorAll('.data-row');
+            rows.forEach((row, index) => {
+                const firstCell = row.querySelector('td');
+                if (firstCell) {
+                    firstCell.textContent = index + 1;
+                }
+            });
+        }
+
+        // Initialize Date-Time Pickers
+        const datetimePickerConfig = {
+            enableTime: true,
+            dateFormat: "d-m-Y H:i:S",
+            time_24hr: true,
+            allowInput: true,
+            clickOpens: true,
+            minuteIncrement: 1,
+            enableSeconds: true,
+            locale: {
+                firstDayOfWeek: 0
+            },
+            onReady: function(selectedDates, dateStr, instance) {
+                // Add "Now" button functionality
+                const calendarContainer = instance.calendarContainer;
+                const timeContainer = calendarContainer.querySelector('.flatpickr-time');
+                
+                if (timeContainer) {
+                    // Create button container if it doesn't exist
+                    let buttonContainer = timeContainer.querySelector('.flatpickr-buttons');
+                    if (!buttonContainer) {
+                        buttonContainer = document.createElement('div');
+                        buttonContainer.className = 'flatpickr-buttons';
+                        buttonContainer.style.cssText = 'display: flex; justify-content: space-between; margin-top: 10px; padding-top: 10px; border-top: 1px solid #e0e0e0;';
+                        timeContainer.appendChild(buttonContainer);
+                    }
+                    
+                    // Add "Now" button
+                    if (!buttonContainer.querySelector('.flatpickr-now-btn')) {
+                        const nowButton = document.createElement('button');
+                        nowButton.type = 'button';
+                        nowButton.className = 'flatpickr-now-btn';
+                        nowButton.textContent = 'Now';
+                        nowButton.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            instance.setDate(new Date(), true);
+                        });
+                        buttonContainer.insertBefore(nowButton, buttonContainer.firstChild);
+                    }
+                }
+            }
+        };
+
+        // Initialize all datetime pickers
+        document.querySelectorAll('.datetime-picker').forEach(function(input) {
+            if (!input.readOnly) {
+                const picker = flatpickr(input, datetimePickerConfig);
+                
+                // Make calendar icon clickable
+                const icon = input.parentElement.querySelector('.far.fa-calendar-alt');
+                if (icon) {
+                    icon.addEventListener('click', function() {
+                        picker.open();
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>
