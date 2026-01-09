@@ -10,6 +10,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Font Awesome (CDN) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <!-- Toast Service - Must load first to override alert/confirm -->
+    <script src="toast.js"></script>
     <style>
         * {
             margin: 0;
@@ -218,6 +221,9 @@
         <div class="loading-subtext">Please wait</div>
     </div>
 
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
     <div class="login-container">
         <div class="login-header">
             <img src="assets/logo.png" alt="Telangana State Police" class="login-logo">
@@ -249,6 +255,8 @@
 
     <script src="auth.js"></script>
     <script>
+        // ToastService is now provided by toast.js (loaded in head)
+
         // Password toggle functionality
         const passwordToggle = document.getElementById('passwordToggle');
         const passwordInput = document.getElementById('password');

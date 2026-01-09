@@ -13,6 +13,8 @@
     <!-- Flatpickr CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="style.css">
+    <!-- Toast Service - Must load first to override alert/confirm -->
+    <script src="toast.js"></script>
 </head>
 <body>
 
@@ -1550,82 +1552,7 @@
         const editFIRId = urlParams.get('id');
         let currentFIRId = null;
 
-        // Toast Notification Service
-        const ToastService = {
-            show: function(message, type = 'info', duration = 3000) {
-                const container = document.getElementById('toastContainer');
-                if (!container) return;
-
-                const toast = document.createElement('div');
-                toast.className = `toast ${type}`;
-                
-                const icons = {
-                    success: '<i class="fas fa-check-circle"></i>',
-                    error: '<i class="fas fa-exclamation-circle"></i>',
-                    warning: '<i class="fas fa-exclamation-triangle"></i>',
-                    info: '<i class="fas fa-info-circle"></i>'
-                };
-
-                const titles = {
-                    success: 'Success',
-                    error: 'Error',
-                    warning: 'Warning',
-                    info: 'Info'
-                };
-
-                toast.innerHTML = `
-                    <div class="toast-icon">${icons[type] || icons.info}</div>
-                    <div class="toast-content">
-                        <div class="toast-title">${titles[type] || 'Info'}</div>
-                        <div class="toast-message">${message}</div>
-                    </div>
-                    <button class="toast-close" aria-label="Close">&times;</button>
-                `;
-
-                container.appendChild(toast);
-
-                // Close button functionality
-                const closeBtn = toast.querySelector('.toast-close');
-                closeBtn.addEventListener('click', () => {
-                    this.hide(toast);
-                });
-
-                // Auto-hide after duration
-                if (duration > 0) {
-                    setTimeout(() => {
-                        this.hide(toast);
-                    }, duration);
-                }
-
-                return toast;
-            },
-
-            hide: function(toast) {
-                if (!toast) return;
-                toast.classList.add('hiding');
-                setTimeout(() => {
-                    if (toast.parentElement) {
-                        toast.parentElement.removeChild(toast);
-                    }
-                }, 300);
-            },
-
-            success: function(message, duration = 3000) {
-                return this.show(message, 'success', duration);
-            },
-
-            error: function(message, duration = 4000) {
-                return this.show(message, 'error', duration);
-            },
-
-            warning: function(message, duration = 3000) {
-                return this.show(message, 'warning', duration);
-            },
-
-            info: function(message, duration = 3000) {
-                return this.show(message, 'info', duration);
-            }
-        };
+        // ToastService is now provided by toast.js (loaded in head)
 
         // Accordion sections configuration
         const accordionSections = [
@@ -2257,8 +2184,8 @@
 
             // Mobile Menu Toggle
         document.querySelector('.menu-toggle').addEventListener('click', () => {
-             // Toggle logic for sidebar or simple alert for now
-             alert('Mobile Menu Toggle Clicked');
+             // Toggle logic for sidebar or simple toast for now
+             ToastService.info('Mobile Menu Toggle Clicked');
         });
 
         // Crime Type and Crime Sub Type Logic
@@ -2731,11 +2658,7 @@
                         saveActsSections();
                     } else {
                         console.error('saveActsSections is not a function', typeof saveActsSections);
-                        if (typeof ToastService !== 'undefined') {
-                            ToastService.error('Error: Save function not found. Please refresh the page.');
-                        } else {
-                            alert('Error: Save function not found. Please refresh the page.');
-                        }
+                        ToastService.error('Error: Save function not found. Please refresh the page.');
                     }
                 });
             } else {
@@ -2751,11 +2674,7 @@
                         saveOccurrence();
                     } else {
                         console.error('saveOccurrence is not a function');
-                        if (typeof ToastService !== 'undefined') {
-                            ToastService.error('Error: Save function not found. Please refresh the page.');
-                        } else {
-                            alert('Error: Save function not found. Please refresh the page.');
-                        }
+                        ToastService.error('Error: Save function not found. Please refresh the page.');
                     }
                 });
             }

@@ -11,6 +11,8 @@
     <!-- Font Awesome (CDN) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <!-- Toast Service - Must load first to override alert/confirm -->
+    <script src="toast.js"></script>
     <style>
         .fir-list-container {
             max-width: 1400px;
@@ -298,6 +300,9 @@
         </div>
     </header>
 
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
     <!-- Main Content -->
     <main class="main-content">
         <div class="fir-list-container">
@@ -331,6 +336,9 @@
         if (!AuthService.isLoggedIn()) {
             window.location.href = 'login.html';
         }
+
+        // ToastService is now provided by toast.js (loaded in head)
+        // Use window.ToastService or just ToastService if available
 
         // Display username
         document.getElementById('userName').textContent = AuthService.getUsername().toUpperCase();
@@ -406,25 +414,33 @@
             firList.innerHTML = html;
         }
 
-        // Edit FIR
-        function editFIR(id) {
+        // Edit FIR (make it globally accessible)
+        window.editFIR = function(id) {
             window.location.href = `index.html?id=${id}`;
-        }
+        };
 
-        // Delete FIR
-        function deleteFIR(id) {
-            if (confirm('Are you sure you want to delete this FIR record?')) {
-                FIRService.deleteFIR(id);
-                renderFIRList();
+        // Delete FIR (make it globally accessible)
+        window.deleteFIR = function(id) {
+            if (window.ToastService) {
+                window.ToastService.confirm('Are you sure you want to delete this FIR record?', () => {
+                    FIRService.deleteFIR(id);
+                    renderFIRList();
+                    window.ToastService.success('FIR record deleted successfully');
+                });
             }
-        }
+        };
 
-        // Handle logout
-        function handleLogout() {
-            if (confirm('Are you sure you want to logout?')) {
-                AuthService.logout();
+        // Handle logout (make it globally accessible)
+        window.handleLogout = function() {
+            if (window.ToastService) {
+                window.ToastService.confirm('Are you sure you want to logout?', () => {
+                    window.ToastService.info('Logging out...');
+                    setTimeout(() => {
+                        AuthService.logout();
+                    }, 500);
+                });
             }
-        }
+        };
 
         // Search functionality
         document.getElementById('searchInput').addEventListener('keyup', function(e) {
