@@ -1639,17 +1639,47 @@
             { id: 'accordion-upload-docs', section: 8, name: 'Upload Documents' }
         ];
 
+        // Check for partial/draft FIR data
+        function checkPartialFIR() {
+            // This function can be extended in the future to check for draft/partial FIR data
+            // For now, it's a placeholder to prevent errors
+            // Could check localStorage or cookies for unsaved FIR data
+            try {
+                // Optional: Check for draft FIR in localStorage or cookies
+                // const draftFIR = localStorage.getItem('draftFIR');
+                // if (draftFIR) {
+                //     // Load draft data
+                // }
+            } catch (error) {
+                console.log('No partial FIR data found');
+            }
+        }
+
         // Initialize accordions - disable all except first
         function initializeAccordions() {
             accordionSections.forEach((acc, index) => {
                 const accordionElement = document.getElementById(acc.id);
                 if (accordionElement) {
                     if (index === 0) {
-                        // First accordion is always enabled
+                        // First accordion is always enabled but collapsed by default
                         accordionElement.classList.remove('disabled');
+                        accordionElement.classList.remove('expanded');
+                        accordionElement.classList.add('collapsed');
+                        // Update icon
+                        const icon = accordionElement.querySelector('.accordion-header i');
+                        if (icon) {
+                            icon.className = 'fa-solid fa-angles-right';
+                        }
+                        // Ensure content is hidden (CSS will handle this via collapsed class)
+                        const content = accordionElement.querySelector('.accordion-content');
+                        if (content) {
+                            content.removeAttribute('style');
+                        }
                     } else {
-                        // All others start disabled
+                        // All others start disabled and collapsed
                         accordionElement.classList.add('disabled');
+                        accordionElement.classList.remove('expanded');
+                        accordionElement.classList.add('collapsed');
                     }
                 }
             });
@@ -2151,32 +2181,79 @@
                 checkPartialFIR();
             }
 
-            // Accordion Logic with disabled state check
-            document.querySelectorAll('.accordion-header').forEach(header => {
-                header.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    const item = this.parentElement;
+            // Accordion Logic with disabled state check - Fixed to ensure form visibility
+            function setupAccordionToggle() {
+                document.querySelectorAll('.accordion-header').forEach(header => {
+                    // Remove existing listeners by using a flag or one-time listener
+                    header.onclick = null;
                     
-                    // Don't allow expansion if disabled
-                    if (item.classList.contains('disabled')) {
-                        return;
-                    }
-                    
-                    const icon = this.querySelector('i');
-                    
-                    // Toggle current
-                    if(item.classList.contains('expanded')) {
-                        item.classList.remove('expanded');
-                        item.classList.add('collapsed');
-                        if(icon) icon.className = 'fa-solid fa-angles-right';
-                    } else {
-                        item.classList.add('expanded');
-                        item.classList.remove('collapsed');
-                        if(icon) icon.className = 'fa-solid fa-angles-down';
-                    }
+                    header.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        
+                        const item = this.parentElement;
+                        if (!item) return;
+                        
+                        // Don't allow expansion if disabled
+                        if (item.classList.contains('disabled')) {
+                            return;
+                        }
+                        
+                        const icon = this.querySelector('i');
+                        const content = item.querySelector('.accordion-content');
+                        
+                        // Toggle current state
+                        if (item.classList.contains('expanded')) {
+                            // Collapse it
+                            item.classList.remove('expanded');
+                            item.classList.add('collapsed');
+                            if (icon) {
+                                icon.className = 'fa-solid fa-angles-right';
+                            }
+                            // Ensure content is hidden
+                            if (content) {
+                                content.style.display = 'none';
+                                content.style.visibility = 'hidden';
+                                content.style.opacity = '0';
+                                content.style.maxHeight = '0';
+                            }
+                        } else {
+                            // Expand it - ensure form is visible
+                            item.classList.remove('collapsed');
+                            item.classList.add('expanded');
+                            if (icon) {
+                                icon.className = 'fa-solid fa-angles-down';
+                            }
+                            // Force content to be visible
+                            if (content) {
+                                content.style.display = 'block';
+                                content.style.visibility = 'visible';
+                                content.style.opacity = '1';
+                                content.style.maxHeight = 'none';
+                                content.style.padding = '20px';
+                            }
+                        }
+                    }, { capture: true });
                 });
-            });
+            }
+            
+            // Setup accordion toggle
+            setupAccordionToggle();
+            
+            // Ensure icon clicks work specifically for Acts & Sections accordion
+            setTimeout(() => {
+                const actsSectionsHeader = document.querySelector('#accordion-acts-sections .accordion-header');
+                if (actsSectionsHeader) {
+                    const actsSectionsIcon = actsSectionsHeader.querySelector('i');
+                    if (actsSectionsIcon) {
+                        actsSectionsIcon.style.cursor = 'pointer';
+                        actsSectionsIcon.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            actsSectionsHeader.click();
+                        });
+                    }
+                }
+            }, 100);
 
             // Mobile Menu Toggle
         document.querySelector('.menu-toggle').addEventListener('click', () => {
