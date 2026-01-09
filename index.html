@@ -16,6 +16,16 @@
 </head>
 <body>
 
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text" id="loadingText">Saving Section...</div>
+        <div class="loading-subtext" id="loadingSubtext">Please wait</div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
     <!-- Header -->
     <header class="app-header">
         <div class="header-overlay"></div>
@@ -24,7 +34,7 @@
                 <button class="menu-toggle" aria-label="Toggle Menu">
                     <span class="menu-icon" aria-hidden="true"></span>
                 </button>
-                <div class="brand">
+                <div class="brand" style="cursor: pointer;" onclick="window.location.href='home.html'">
                     <img src="assets/logo.png" alt="Telangana State Police" class="brand-logo">
                     <div class="brand-text">
                         <h3>SHO HOMEPAGE</h3>
@@ -81,15 +91,15 @@
                         ZERO FIR
                     </label>
                 </div>
-                <div class="prev-fir">
+                <div class="prev-fir" id="prevFirCount">
                     Previous FIR : 0/2026
                 </div>
             </div>
             <div class="controls-right">
-                <button class="btn btn-link">Cancel</button>
-                <button class="btn btn-primary">Print Draft Copy</button>
-                <button class="btn btn-primary">Save Draft</button>
-                <button class="btn btn-success">Generate FIR</button>
+                <button class="btn btn-link" onclick="window.location.href='home.html'">Cancel</button>
+                <button class="btn btn-primary" onclick="window.print()">Print Draft Copy</button>
+                <button class="btn btn-primary" id="saveDraftBtn">Save Draft</button>
+                <button class="btn btn-success" id="generateFIRBtn">Generate FIR</button>
             </div>
         </div>
 
@@ -97,7 +107,7 @@
         <div class="form-container">
             
             <!-- Acts & Sections -->
-            <div class="accordion-item collapsed">
+            <div class="accordion-item collapsed" id="accordion-acts-sections" data-section="1" data-completed="false">
                 <div class="accordion-header">
                     <h3>Acts & Sections <span class="required">*</span></h3>
                     <i class="fa-solid fa-angles-right"></i>
@@ -261,11 +271,7 @@
                                          </tr>
                                      </thead>
                                      <tbody id="actsSectionsTableBody">
-                                         <tr class="save-row">
-                                            <td colspan="4">
-                                                <button class="btn-save-sm"><i class="fas fa-save"></i> Save</button>
-                                            </td>
-                                         </tr>
+                                         <!-- Rows will be added dynamically -->
                                      </tbody>
                                  </table>
                              </div>
@@ -316,12 +322,20 @@
                          </div>
                     </div>
                     
+                    <!-- Save Button for Acts & Sections -->
+                    <div class="mt-3" style="text-align: right; padding-top: 15px; border-top: 1px solid #e0e0e0;">
+                        <button class="btn btn-primary" id="saveActsSectionsBtn">
+                            <span class="btn-loader"></span>
+                            <i class="fas fa-save btn-icon"></i> 
+                            <span class="btn-text">Save Acts & Sections</span>
+                        </button>
+                    </div>
 
                 </div>
             </div>
 
             <!-- Occurrence Of Offence -->
-            <div class="accordion-item collapsed">
+            <div class="accordion-item collapsed disabled" id="accordion-occurrence" data-section="2" data-completed="false">
                 <div class="accordion-header">
                     <h3>Occurrence Of Offence <span class="required">*</span></h3>
                     <i class="fa-solid fa-angles-right"></i>
@@ -432,8 +446,12 @@
                         </div>
 
                         <!-- Save Button -->
-                        <div class="mt-3">
-                            <button class="btn-save-sm"><i class="fas fa-save"></i> Save</button>
+                        <div class="mt-3" style="text-align: right;">
+                            <button class="btn btn-primary" id="saveOccurrenceBtn">
+                                <span class="btn-loader"></span>
+                                <i class="fas fa-save btn-icon"></i> 
+                                <span class="btn-text">Save Occurrence Of Offence</span>
+                            </button>
                         </div>
                     </div>
 
@@ -441,7 +459,7 @@
             </div>
 
             <!-- Complainant Details -->
-            <div class="accordion-item collapsed">
+            <div class="accordion-item collapsed disabled" id="accordion-complainant" data-section="3" data-completed="false">
                 <div class="accordion-header">
                     <h3>Complainant Details <span class="required">*</span></h3>
                     <i class="fa-solid fa-angles-right"></i>
@@ -778,7 +796,7 @@
             </div>
 
             <!-- Accused Details -->
-            <div class="accordion-item collapsed">
+            <div class="accordion-item collapsed disabled" id="accordion-accused" data-section="4" data-completed="false">
                 <div class="accordion-header">
                     <h3>Accused Details <span class="required">*</span></h3>
                     <i class="fa-solid fa-angles-right"></i>
@@ -788,7 +806,7 @@
                         <!-- Top Section with Title and Controls -->
                         <div class="accused-header-section">
                             <div class="accused-header-left">
-                                <h4 class="accused-title">Accused Details <span class="required">*</span></h4>
+                                <h4 class="accused-title"><span class="required">*</span>Accused Types</h4>
                             </div>
                             <div class="accused-header-right">
                                 <div class="form-group">
@@ -1094,7 +1112,7 @@
             </div>
 
             <!-- Victim Details -->
-            <div class="accordion-item collapsed">
+            <div class="accordion-item collapsed disabled" id="accordion-victim" data-section="5" data-completed="false">
                 <div class="accordion-header">
                     <h3>Victim Details</h3>
                     <i class="fa-solid fa-angles-right"></i>
@@ -1417,15 +1435,84 @@
             </div>
 
             <!-- Property Details -->
-            <div class="accordion-item collapsed">
+            <div class="accordion-item collapsed disabled" id="accordion-property" data-section="6" data-completed="false">
                 <div class="accordion-header">
                     <h3>Property Details</h3>
                     <i class="fa-solid fa-angles-right"></i>
                 </div>
+                <div class="accordion-content">
+                    <div class="property-details-wrapper">
+                        <table class="property-details-table">
+                            <tbody>
+                                <!-- First Question -->
+                                <tr class="property-question-row">
+                                    <td class="property-question-label-cell">
+                                        <label class="property-question-label">Is Case related to any License Number?</label>
+                                    </td>
+                                    <td class="property-radio-cell">
+                                        <div class="radio-group property-radio-group">
+                                            <label class="radio-label">
+                                                <input type="radio" name="license_number" value="yes" id="license_yes">
+                                                <span class="radio-custom"></span>
+                                                Yes
+                                            </label>
+                                            <label class="radio-label">
+                                                <input type="radio" name="license_number" value="no" id="license_no" checked>
+                                                <span class="radio-custom"></span>
+                                                No
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td class="property-input-cell">
+                                        <div class="property-input-wrapper" id="licenseInputWrapper" style="display: none;">
+                                            <input type="text" class="form-control property-input" id="licenseNumber" placeholder="Enter Licence No">
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- Second Question -->
+                                <tr class="property-question-row">
+                                    <td class="property-question-label-cell">
+                                        <label class="property-question-label">Is Property Stolen/Involved?</label>
+                                    </td>
+                                    <td class="property-radio-cell">
+                                        <div class="radio-group property-radio-group">
+                                            <label class="radio-label">
+                                                <input type="radio" name="property_stolen" value="yes" id="property_yes">
+                                                <span class="radio-custom"></span>
+                                                Yes
+                                            </label>
+                                            <label class="radio-label">
+                                                <input type="radio" name="property_stolen" value="no" id="property_no" checked>
+                                                <span class="radio-custom"></span>
+                                                No
+                                            </label>
+                                            <label class="radio-label">
+                                                <input type="radio" name="property_stolen" value="not_known" id="property_not_known">
+                                                <span class="radio-custom"></span>
+                                                Not Known
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td class="property-input-cell">
+                                        <div class="property-link-wrapper" id="stolenPropertyLinkWrapper" style="display: none;">
+                                            <a href="#" class="link-blue property-link">Stolen Property</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Save Button -->
+                        <div class="property-action-buttons">
+                            <button class="btn-save-sm"><i class="fas fa-save"></i> Save</button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Brief Facts -->
-            <div class="accordion-item collapsed">
+            <div class="accordion-item collapsed disabled" id="accordion-brief-facts" data-section="7" data-completed="false">
                 <div class="accordion-header">
                     <h3>Brief Facts <span class="required">*</span></h3>
                     <i class="fa-solid fa-angles-right"></i>
@@ -1433,7 +1520,7 @@
             </div>
 
             <!-- Upload Documents -->
-            <div class="accordion-item collapsed">
+            <div class="accordion-item collapsed disabled" id="accordion-upload-docs" data-section="8" data-completed="false">
                 <div class="accordion-header">
                     <h3>Upload Documents <span class="required">*</span></h3>
                     <i class="fa-solid fa-angles-right"></i>
@@ -1451,15 +1538,631 @@
 
     <!-- Flatpickr JS -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="auth.js"></script>
     <script>
+        // Check authentication
+        if (!AuthService.isLoggedIn()) {
+            window.location.href = 'login.html';
+        }
+
+        // Get FIR ID from URL if editing
+        const urlParams = new URLSearchParams(window.location.search);
+        const editFIRId = urlParams.get('id');
+        let currentFIRId = null;
+
+        // Toast Notification Service
+        const ToastService = {
+            show: function(message, type = 'info', duration = 3000) {
+                const container = document.getElementById('toastContainer');
+                if (!container) return;
+
+                const toast = document.createElement('div');
+                toast.className = `toast ${type}`;
+                
+                const icons = {
+                    success: '<i class="fas fa-check-circle"></i>',
+                    error: '<i class="fas fa-exclamation-circle"></i>',
+                    warning: '<i class="fas fa-exclamation-triangle"></i>',
+                    info: '<i class="fas fa-info-circle"></i>'
+                };
+
+                const titles = {
+                    success: 'Success',
+                    error: 'Error',
+                    warning: 'Warning',
+                    info: 'Info'
+                };
+
+                toast.innerHTML = `
+                    <div class="toast-icon">${icons[type] || icons.info}</div>
+                    <div class="toast-content">
+                        <div class="toast-title">${titles[type] || 'Info'}</div>
+                        <div class="toast-message">${message}</div>
+                    </div>
+                    <button class="toast-close" aria-label="Close">&times;</button>
+                `;
+
+                container.appendChild(toast);
+
+                // Close button functionality
+                const closeBtn = toast.querySelector('.toast-close');
+                closeBtn.addEventListener('click', () => {
+                    this.hide(toast);
+                });
+
+                // Auto-hide after duration
+                if (duration > 0) {
+                    setTimeout(() => {
+                        this.hide(toast);
+                    }, duration);
+                }
+
+                return toast;
+            },
+
+            hide: function(toast) {
+                if (!toast) return;
+                toast.classList.add('hiding');
+                setTimeout(() => {
+                    if (toast.parentElement) {
+                        toast.parentElement.removeChild(toast);
+                    }
+                }, 300);
+            },
+
+            success: function(message, duration = 3000) {
+                return this.show(message, 'success', duration);
+            },
+
+            error: function(message, duration = 4000) {
+                return this.show(message, 'error', duration);
+            },
+
+            warning: function(message, duration = 3000) {
+                return this.show(message, 'warning', duration);
+            },
+
+            info: function(message, duration = 3000) {
+                return this.show(message, 'info', duration);
+            }
+        };
+
+        // Accordion sections configuration
+        const accordionSections = [
+            { id: 'accordion-acts-sections', section: 1, name: 'Acts & Sections' },
+            { id: 'accordion-occurrence', section: 2, name: 'Occurrence Of Offence' },
+            { id: 'accordion-complainant', section: 3, name: 'Complainant Details' },
+            { id: 'accordion-accused', section: 4, name: 'Accused Details' },
+            { id: 'accordion-victim', section: 5, name: 'Victim Details' },
+            { id: 'accordion-property', section: 6, name: 'Property Details' },
+            { id: 'accordion-brief-facts', section: 7, name: 'Brief Facts' },
+            { id: 'accordion-upload-docs', section: 8, name: 'Upload Documents' }
+        ];
+
+        // Initialize accordions - disable all except first
+        function initializeAccordions() {
+            accordionSections.forEach((acc, index) => {
+                const accordionElement = document.getElementById(acc.id);
+                if (accordionElement) {
+                    if (index === 0) {
+                        // First accordion is always enabled
+                        accordionElement.classList.remove('disabled');
+                    } else {
+                        // All others start disabled
+                        accordionElement.classList.add('disabled');
+                    }
+                }
+            });
+        }
+
+        // Generate FIR number
+        function generateFIRNumber() {
+            const year = new Date().getFullYear();
+            const randomNum = Math.floor(Math.random() * 9000) + 1000; // 4-digit random number
+            return `${randomNum}/${year}`;
+        }
+
+        // Save Acts & Sections section
+        async function saveActsSections() {
+            console.log('saveActsSections function called'); // Debug log
+            
+            const saveBtn = document.getElementById('saveActsSectionsBtn');
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            const loadingText = document.getElementById('loadingText');
+            const loadingSubtext = document.getElementById('loadingSubtext');
+
+            // Disable button and show loading state on button
+            if (!saveBtn) {
+                console.error('Save button not found!');
+                ToastService.error('Save button not found. Please refresh the page.');
+                return;
+            }
+
+            saveBtn.disabled = true;
+            saveBtn.classList.add('loading');
+
+            // Collect Acts & Sections data
+            const actsSectionsData = {
+                crimeType: document.getElementById('crimeType')?.value || '',
+                crimeSubType: document.getElementById('crimeSubType')?.value || '',
+                petitionNumber: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('Petition Number'));
+                    if (label && label.parentElement) {
+                        const input = label.parentElement.querySelector('input');
+                        return input?.value || '';
+                    }
+                    return '';
+                })(),
+                gravity: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('Gravity'));
+                    if (label && label.parentElement) {
+                        const select = label.parentElement.querySelector('select');
+                        return select?.value || '';
+                    }
+                    return '';
+                })(),
+                fromDate: document.getElementById('fromDate')?.value || '',
+                toDate: document.getElementById('toDate')?.value || '',
+                timePeriod: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('Time Period'));
+                    if (label && label.parentElement) {
+                        const input = label.parentElement.querySelector('input');
+                        return input?.value || '';
+                    }
+                    return '';
+                })(),
+                priorTo: document.getElementById('priorTo')?.value || '',
+                infoReceivedDate: document.getElementById('infoReceivedDate')?.value || '',
+                informationType: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('Information Type'));
+                    if (label && label.parentElement) {
+                        const select = label.parentElement.querySelector('select');
+                        return select?.value || '';
+                    }
+                    return '';
+                })(),
+                gdNumber: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('GD Number'));
+                    if (label && label.parentElement) {
+                        const input = label.parentElement.querySelector('input');
+                        return input?.value || '';
+                    }
+                    return '';
+                })(),
+                gdDate: document.getElementById('gdDate')?.value || '',
+                firDate: document.getElementById('firDate')?.value || '',
+                reasonForDelay: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('Reason for Delay'));
+                    if (label && label.parentElement) {
+                        const textarea = label.parentElement.querySelector('textarea');
+                        return textarea?.value || '';
+                    }
+                    return '';
+                })(),
+                actsSections: getTableData('actsSectionsTable'),
+                majorMinor: getTableData('majorMinorTable'),
+                firType: (() => {
+                    const checkedRadio = document.querySelector('input[name="fir_type"]:checked');
+                    if (checkedRadio) {
+                        const labelText = checkedRadio.parentElement.textContent.trim();
+                        return labelText.includes('ZERO FIR') ? 'ZERO FIR' : 'REGULAR FIR';
+                    }
+                    return 'REGULAR FIR';
+                })()
+            };
+
+            // Validate required fields
+            if (!actsSectionsData.crimeType) {
+                if (saveBtn) {
+                    saveBtn.disabled = false;
+                    saveBtn.classList.remove('loading');
+                }
+                ToastService.error('Please select Crime Type');
+                return;
+            }
+
+            if (!actsSectionsData.infoReceivedDate) {
+                if (saveBtn) {
+                    saveBtn.disabled = false;
+                    saveBtn.classList.remove('loading');
+                }
+                ToastService.error('Please select Information Received at PS date');
+                return;
+            }
+
+            // Show loading overlay
+            if (loadingOverlay) {
+                loadingOverlay.classList.add('show');
+                if (loadingText) loadingText.textContent = 'Saving Acts & Sections...';
+                if (loadingSubtext) loadingSubtext.textContent = 'Please wait';
+            }
+
+            try {
+                // Simulate server delay with random delay between 3-15 seconds
+                await ServerDelayService.simulateServerRequest(async () => {
+                    // Generate FIR number if this is the first save
+                    let firNumber = null;
+                    if (!editFIRId && !currentFIRId) {
+                        firNumber = generateFIRNumber();
+                        currentFIRId = FIRService.generateId();
+                        
+                        // Create initial FIR record
+                        const initialFIR = {
+                            id: currentFIRId,
+                            firNumber: firNumber,
+                            status: 'in_progress',
+                            actsSections: actsSectionsData,
+                            completedSections: [1],
+                            createdAt: new Date().toISOString(),
+                            updatedAt: new Date().toISOString()
+                        };
+                        
+                        FIRService.saveFIRDirect(initialFIR);
+                        
+                        // Update URL
+                        const newUrl = window.location.pathname + '?id=' + currentFIRId;
+                        window.history.pushState({}, '', newUrl);
+                        
+                        // Display FIR number
+                        displayFIRNumber(firNumber);
+                    } else {
+                        // Update existing FIR
+                        const id = editFIRId || currentFIRId;
+                        const existingFIR = FIRService.getFIR(id);
+                        
+                        if (existingFIR) {
+                            existingFIR.actsSections = actsSectionsData;
+                            if (!existingFIR.completedSections) {
+                                existingFIR.completedSections = [];
+                            }
+                            if (!existingFIR.completedSections.includes(1)) {
+                                existingFIR.completedSections.push(1);
+                            }
+                            existingFIR.updatedAt = new Date().toISOString();
+                            
+                            FIRService.updateFIR(id, existingFIR);
+                            
+                            // Display FIR number if not already displayed
+                            if (existingFIR.firNumber) {
+                                displayFIRNumber(existingFIR.firNumber);
+                            }
+                        }
+                    }
+
+                    // Mark section as completed
+                    const actsSectionAccordion = document.getElementById('accordion-acts-sections');
+                    if (actsSectionAccordion) {
+                        actsSectionAccordion.classList.add('completed');
+                        actsSectionAccordion.setAttribute('data-completed', 'true');
+                    }
+
+                    // Enable next accordion
+                    enableNextAccordion(1);
+
+                    // Hide loading overlay
+                    if (loadingOverlay) {
+                        loadingOverlay.classList.remove('show');
+                    }
+                    if (saveBtn) {
+                        saveBtn.disabled = false;
+                        saveBtn.classList.remove('loading');
+                    }
+
+                    ToastService.success('Acts & Sections saved successfully!');
+                }, 3, 15, (elapsed, total) => {
+                    // Update loading text with progress
+                    const progress = Math.min(Math.round((elapsed / total) * 100), 100);
+                    if (loadingText) {
+                        loadingText.textContent = `Saving Acts & Sections... ${progress}%`;
+                    }
+                });
+            } catch (error) {
+                // Hide loading overlay on error
+                if (loadingOverlay) {
+                    loadingOverlay.classList.remove('show');
+                }
+                if (saveBtn) {
+                    saveBtn.disabled = false;
+                    saveBtn.classList.remove('loading');
+                }
+                ToastService.error('Error saving Acts & Sections. Please try again.');
+                console.error('Error:', error);
+            }
+        }
+
+        // Save Occurrence section
+        async function saveOccurrence() {
+            const saveBtn = document.getElementById('saveOccurrenceBtn');
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            const loadingText = document.getElementById('loadingText');
+            const loadingSubtext = document.getElementById('loadingSubtext');
+
+            // Disable button and show loading state on button
+            if (saveBtn) {
+                saveBtn.disabled = true;
+                saveBtn.classList.add('loading');
+            }
+
+            const occurrenceData = collectOccurrenceData();
+            
+            if (!currentFIRId && !editFIRId) {
+                if (saveBtn) {
+                    saveBtn.disabled = false;
+                    saveBtn.classList.remove('loading');
+                }
+                ToastService.warning('Please save Acts & Sections first');
+                return;
+            }
+
+            // Show loading overlay
+            if (loadingOverlay) {
+                loadingOverlay.classList.add('show');
+                if (loadingText) loadingText.textContent = 'Saving Occurrence Of Offence...';
+                if (loadingSubtext) loadingSubtext.textContent = 'Please wait';
+            }
+
+            try {
+                // Simulate server delay with random delay between 3-15 seconds
+                await ServerDelayService.simulateServerRequest(async () => {
+                    const id = editFIRId || currentFIRId;
+                    const existingFIR = FIRService.getFIR(id);
+                    
+                    if (existingFIR) {
+                        existingFIR.occurrence = occurrenceData;
+                        if (!existingFIR.completedSections) {
+                            existingFIR.completedSections = [];
+                        }
+                        if (!existingFIR.completedSections.includes(2)) {
+                            existingFIR.completedSections.push(2);
+                        }
+                        existingFIR.updatedAt = new Date().toISOString();
+                        
+                        FIRService.updateFIR(id, existingFIR);
+                    }
+
+                    // Mark section as completed
+                    const occurrenceAccordion = document.getElementById('accordion-occurrence');
+                    if (occurrenceAccordion) {
+                        occurrenceAccordion.classList.add('completed');
+                        occurrenceAccordion.setAttribute('data-completed', 'true');
+                    }
+
+                    // Enable next accordion
+                    enableNextAccordion(2);
+
+                    // Hide loading overlay
+                    if (loadingOverlay) {
+                        loadingOverlay.classList.remove('show');
+                    }
+                    if (saveBtn) {
+                        saveBtn.disabled = false;
+                        saveBtn.classList.remove('loading');
+                    }
+
+                    ToastService.success('Occurrence Of Offence saved successfully!');
+                }, 3, 15, (elapsed, total) => {
+                    // Update loading text with progress
+                    const progress = Math.min(Math.round((elapsed / total) * 100), 100);
+                    if (loadingText) {
+                        loadingText.textContent = `Saving Occurrence Of Offence... ${progress}%`;
+                    }
+                });
+            } catch (error) {
+                // Hide loading overlay on error
+                if (loadingOverlay) {
+                    loadingOverlay.classList.remove('show');
+                }
+                if (saveBtn) {
+                    saveBtn.disabled = false;
+                    saveBtn.classList.remove('loading');
+                }
+                ToastService.error('Error saving Occurrence Of Offence. Please try again.');
+                console.error('Error:', error);
+            }
+        }
+
+        // Helper functions that saveActsSections and saveOccurrence depend on
+        function getTableData(tableId) {
+            const table = document.getElementById(tableId);
+            if (!table) return [];
+            
+            const rows = table.querySelectorAll('tbody tr.data-row');
+            const data = [];
+            
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length > 0) {
+                    const rowData = {};
+                    cells.forEach((cell, index) => {
+                        rowData[`col${index}`] = cell.textContent.trim();
+                    });
+                    data.push(rowData);
+                }
+            });
+            
+            return data;
+        }
+
+        function collectOccurrenceData() {
+            return {
+                placeOfOffence: document.querySelector('input[name="place_of_offence"]:checked')?.value || 'within',
+                directionsFromPS: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('Directions From PS'));
+                    if (label && label.parentElement) {
+                        const select = label.parentElement.querySelector('select');
+                        return select?.value || '';
+                    }
+                    return '';
+                })(),
+                distanceFromPS: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('Distance From PS'));
+                    if (label && label.parentElement) {
+                        const input = label.parentElement.querySelector('input');
+                        return input?.value || '';
+                    }
+                    return '';
+                })(),
+                beatNo: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('Beat No'));
+                    if (label && label.parentElement) {
+                        const input = label.parentElement.querySelector('input');
+                        return input?.value || '';
+                    }
+                    return '';
+                })(),
+                placeHouseNo: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('Place/House No'));
+                    if (label && label.parentElement) {
+                        const input = label.parentElement.querySelector('input');
+                        return input?.value || '';
+                    }
+                    return '';
+                })(),
+                streetRoadNo: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('Street/Road Number'));
+                    if (label && label.parentElement) {
+                        const input = label.parentElement.querySelector('input');
+                        return input?.value || '';
+                    }
+                    return '';
+                })(),
+                landmarkMilestone: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('Landmark/Milestone'));
+                    if (label && label.parentElement) {
+                        const input = label.parentElement.querySelector('input');
+                        return input?.value || '';
+                    }
+                    return '';
+                })(),
+                district: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('District') && l.textContent.includes('Place of Offence'));
+                    if (label && label.parentElement) {
+                        const select = label.parentElement.querySelector('select');
+                        return select?.value || '';
+                    }
+                    return '';
+                })(),
+                jurisdictionArea: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('Jurisdiction Area/Mandal'));
+                    if (label && label.parentElement) {
+                        const input = label.parentElement.querySelector('input');
+                        return input?.value || '';
+                    }
+                    return '';
+                })(),
+                wardColonyVillage: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('Ward/Colony/Village'));
+                    if (label && label.parentElement) {
+                        const select = label.parentElement.querySelector('select');
+                        return select?.value || '';
+                    }
+                    return '';
+                })(),
+                pinCode: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('Pin Code') && l.textContent.includes('Place of Offence'));
+                    if (label && label.parentElement) {
+                        const select = label.parentElement.querySelector('select');
+                        return select?.value || '';
+                    }
+                    return '';
+                })(),
+                latitude: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('Latitude'));
+                    if (label && label.parentElement) {
+                        const input = label.parentElement.querySelector('input');
+                        return input?.value || '';
+                    }
+                    return '';
+                })(),
+                longitude: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('Longitude'));
+                    if (label && label.parentElement) {
+                        const input = label.parentElement.querySelector('input');
+                        return input?.value || '';
+                    }
+                    return '';
+                })()
+            };
+        }
+
+        function enableNextAccordion(sectionNumber) {
+            const nextSection = accordionSections.find(acc => acc.section === sectionNumber + 1);
+            if (nextSection) {
+                const nextAccordion = document.getElementById(nextSection.id);
+                if (nextAccordion) {
+                    nextAccordion.classList.remove('disabled');
+                }
+            }
+        }
+
+        function displayFIRNumber(firNumber) {
+            const controlsLeft = document.querySelector('.controls-left');
+            if (controlsLeft) {
+                // Check if FIR number already displayed
+                let firNumberDisplay = document.getElementById('firNumberDisplay');
+                if (!firNumberDisplay) {
+                    firNumberDisplay = document.createElement('div');
+                    firNumberDisplay.id = 'firNumberDisplay';
+                    firNumberDisplay.className = 'fir-number-display';
+                    controlsLeft.appendChild(firNumberDisplay);
+                }
+                firNumberDisplay.textContent = `FIR No: ${firNumber}`;
+            }
+        }
+
         // Wait for DOM to be fully loaded
         document.addEventListener('DOMContentLoaded', function() {
-            // Simple Accordion Logic
+            // Update previous FIR count
+            const allFIRs = FIRService.getAllFIRs();
+            const firCount = allFIRs.length;
+            const currentYear = new Date().getFullYear();
+            const prevFirElement = document.getElementById('prevFirCount');
+            if (prevFirElement) {
+                prevFirElement.textContent = `Previous FIR : ${firCount}/${currentYear}`;
+            }
+
+            // Initialize accordions
+            initializeAccordions();
+
+            // Load FIR data if editing
+            if (editFIRId) {
+                loadFIRData(editFIRId);
+                loadAccordionProgress(editFIRId);
+            } else {
+                // Check if there's a partial FIR in progress
+                checkPartialFIR();
+            }
+
+            // Accordion Logic with disabled state check
             document.querySelectorAll('.accordion-header').forEach(header => {
                 header.addEventListener('click', function(e) {
                     e.preventDefault();
                     e.stopPropagation();
                     const item = this.parentElement;
+                    
+                    // Don't allow expansion if disabled
+                    if (item.classList.contains('disabled')) {
+                        return;
+                    }
+                    
                     const icon = this.querySelector('i');
                     
                     // Toggle current
@@ -1516,7 +2219,7 @@
                 
                 // Validate that both Act and Section are selected
                 if (!selectedAct || !selectedSection) {
-                    alert('Please select both Act and Section before adding.');
+                    ToastService.warning('Please select both Act and Section before adding.');
                     return;
                 }
                 
@@ -1536,9 +2239,8 @@
                     <td><a href="#" class="link-blue delete-row">Delete</a></td>
                 `;
                 
-                // Insert before the save row
-                const saveRow = actsSectionsTableBody.querySelector('.save-row');
-                actsSectionsTableBody.insertBefore(newRow, saveRow);
+                // Add to table
+                actsSectionsTableBody.appendChild(newRow);
                 
                 // Add delete functionality
                 newRow.querySelector('.delete-row').addEventListener('click', function(e) {
@@ -1571,7 +2273,7 @@
                 
                 // Validate that both Major and Minor are selected
                 if (!selectedMajor || !selectedMinor) {
-                    alert('Please select both Major and Minor before adding.');
+                    ToastService.warning('Please select both Major and Minor before adding.');
                     return;
                 }
                 
@@ -1851,7 +2553,942 @@
                 });
             });
         }
+
+        // Property Details - Show/Hide License Number Input and Stolen Property Link
+        // Both should only appear when BOTH "Yes" options are selected
+        const licenseYesRadio = document.getElementById('license_yes');
+        const licenseNoRadio = document.getElementById('license_no');
+        const propertyYesRadio = document.getElementById('property_yes');
+        const propertyNoRadio = document.getElementById('property_no');
+        const propertyNotKnownRadio = document.getElementById('property_not_known');
+        const licenseInputWrapper = document.getElementById('licenseInputWrapper');
+        const licenseNumberInput = document.getElementById('licenseNumber');
+        const stolenPropertyLinkWrapper = document.getElementById('stolenPropertyLinkWrapper');
+
+        // Function to check both conditions and show/hide fields accordingly
+        function togglePropertyFields() {
+            const isLicenseYes = licenseYesRadio && licenseYesRadio.checked;
+            const isPropertyYes = propertyYesRadio && propertyYesRadio.checked;
+            
+            // Both fields should only show when BOTH are "Yes"
+            const shouldShow = isLicenseYes && isPropertyYes;
+            
+            if (licenseInputWrapper) {
+                if (shouldShow) {
+                    licenseInputWrapper.style.display = 'block';
+                    if (licenseNumberInput) {
+                        licenseNumberInput.focus();
+                    }
+                } else {
+                    licenseInputWrapper.style.display = 'none';
+                    if (licenseNumberInput) {
+                        licenseNumberInput.value = '';
+                    }
+                }
+            }
+            
+            if (stolenPropertyLinkWrapper) {
+                if (shouldShow) {
+                    stolenPropertyLinkWrapper.style.display = 'block';
+                } else {
+                    stolenPropertyLinkWrapper.style.display = 'none';
+                }
+            }
+        }
+
+        // Add event listeners to all radio buttons
+        if (licenseYesRadio) {
+            licenseYesRadio.addEventListener('change', togglePropertyFields);
+        }
+        if (licenseNoRadio) {
+            licenseNoRadio.addEventListener('change', togglePropertyFields);
+        }
+        if (propertyYesRadio) {
+            propertyYesRadio.addEventListener('change', togglePropertyFields);
+        }
+        if (propertyNoRadio) {
+            propertyNoRadio.addEventListener('change', togglePropertyFields);
+        }
+        if (propertyNotKnownRadio) {
+            propertyNotKnownRadio.addEventListener('change', togglePropertyFields);
+        }
+        
+        // Initialize on page load
+        togglePropertyFields();
+
+        // Save Draft functionality
+        const saveDraftBtn = document.getElementById('saveDraftBtn');
+        if (saveDraftBtn) {
+            saveDraftBtn.addEventListener('click', function() {
+                saveFIRData('draft');
+            });
+        }
+
+        // Generate FIR functionality
+        const generateFIRBtn = document.getElementById('generateFIRBtn');
+        if (generateFIRBtn) {
+            generateFIRBtn.addEventListener('click', function() {
+                if (validateForm()) {
+                    saveFIRData('completed');
+                    ToastService.success('FIR Generated successfully!');
+                    setTimeout(() => {
+                        window.location.href = 'home.html';
+                    }, 1500);
+                }
+            });
+        }
+
         }); // End of DOMContentLoaded
+
+        // Attach event listeners after all functions are defined (outside DOMContentLoaded)
+        window.addEventListener('load', function() {
+            const saveActsSectionsBtn = document.getElementById('saveActsSectionsBtn');
+            if (saveActsSectionsBtn) {
+                console.log('Attaching event listener to saveActsSectionsBtn'); // Debug
+                saveActsSectionsBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('Save Acts & Sections button clicked'); // Debug
+                    if (typeof saveActsSections === 'function') {
+                        console.log('Calling saveActsSections function'); // Debug
+                        saveActsSections();
+                    } else {
+                        console.error('saveActsSections is not a function', typeof saveActsSections);
+                        if (typeof ToastService !== 'undefined') {
+                            ToastService.error('Error: Save function not found. Please refresh the page.');
+                        } else {
+                            alert('Error: Save function not found. Please refresh the page.');
+                        }
+                    }
+                });
+            } else {
+                console.error('saveActsSectionsBtn not found in DOM!');
+            }
+
+            const saveOccurrenceBtn = document.getElementById('saveOccurrenceBtn');
+            if (saveOccurrenceBtn) {
+                saveOccurrenceBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (typeof saveOccurrence === 'function') {
+                        saveOccurrence();
+                    } else {
+                        console.error('saveOccurrence is not a function');
+                        if (typeof ToastService !== 'undefined') {
+                            ToastService.error('Error: Save function not found. Please refresh the page.');
+                        } else {
+                            alert('Error: Save function not found. Please refresh the page.');
+                        }
+                    }
+                });
+            }
+        });
+
+        // Function to collect all FIR form data
+        function collectFIRData() {
+            const firData = {
+                firType: (() => {
+                    const checkedRadio = document.querySelector('input[name="fir_type"]:checked');
+                    if (checkedRadio) {
+                        const labelText = checkedRadio.parentElement.textContent.trim();
+                        return labelText.includes('ZERO FIR') ? 'ZERO FIR' : 'REGULAR FIR';
+                    }
+                    return 'REGULAR FIR';
+                })(),
+                
+                // Acts & Sections
+                crimeType: document.getElementById('crimeType')?.value || '',
+                crimeSubType: document.getElementById('crimeSubType')?.value || '',
+                petitionNumber: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('Petition Number'));
+                    if (label && label.parentElement) {
+                        const input = label.parentElement.querySelector('input');
+                        return input?.value || '';
+                    }
+                    return '';
+                })(),
+                gravity: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('Gravity'));
+                    if (label && label.parentElement) {
+                        const select = label.parentElement.querySelector('select');
+                        return select?.value || '';
+                    }
+                    return '';
+                })(),
+                
+                // Offence Occurrence
+                fromDate: document.getElementById('fromDate')?.value || '',
+                toDate: document.getElementById('toDate')?.value || '',
+                timePeriod: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('Time Period'));
+                    if (label && label.parentElement) {
+                        const input = label.parentElement.querySelector('input');
+                        return input?.value || '';
+                    }
+                    return '';
+                })(),
+                priorTo: document.getElementById('priorTo')?.value || '',
+                
+                // Offence Information Received
+                infoReceivedDate: document.getElementById('infoReceivedDate')?.value || '',
+                informationType: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('Information Type'));
+                    if (label && label.parentElement) {
+                        const select = label.parentElement.querySelector('select');
+                        return select?.value || '';
+                    }
+                    return '';
+                })(),
+                gdNumber: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('GD Number'));
+                    if (label && label.parentElement) {
+                        const input = label.parentElement.querySelector('input');
+                        return input?.value || '';
+                    }
+                    return '';
+                })(),
+                gdDate: document.getElementById('gdDate')?.value || '',
+                firDate: document.getElementById('firDate')?.value || '',
+                reasonForDelay: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('Reason for Delay'));
+                    if (label && label.parentElement) {
+                        const textarea = label.parentElement.querySelector('textarea');
+                        return textarea?.value || '';
+                    }
+                    return '';
+                })(),
+                
+                // Acts & Sections Table
+                actsSections: getTableData('actsSectionsTable'),
+                
+                // Major Minor Classifications
+                majorMinor: getTableData('majorMinorTable'),
+                
+                // Occurrence of Offence
+                placeOfOffence: document.querySelector('input[name="place_of_offence"]:checked')?.value || 'within',
+                directionsFromPS: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('Directions From PS'));
+                    if (label && label.parentElement) {
+                        const select = label.parentElement.querySelector('select');
+                        return select?.value || '';
+                    }
+                    return '';
+                })(),
+                distanceFromPS: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('Distance From PS'));
+                    if (label && label.parentElement) {
+                        const input = label.parentElement.querySelector('input');
+                        return input?.value || '';
+                    }
+                    return '';
+                })(),
+                beatNo: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('Beat No'));
+                    if (label && label.parentElement) {
+                        const input = label.parentElement.querySelector('input');
+                        return input?.value || '';
+                    }
+                    return '';
+                })(),
+                placeHouseNo: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('Place/House No'));
+                    if (label && label.parentElement) {
+                        const input = label.parentElement.querySelector('input');
+                        return input?.value || '';
+                    }
+                    return '';
+                })(),
+                streetRoadNo: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('Street/Road Number'));
+                    if (label && label.parentElement) {
+                        const input = label.parentElement.querySelector('input');
+                        return input?.value || '';
+                    }
+                    return '';
+                })(),
+                landmarkMilestone: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('Landmark/Milestone'));
+                    if (label && label.parentElement) {
+                        const input = label.parentElement.querySelector('input');
+                        return input?.value || '';
+                    }
+                    return '';
+                })(),
+                district: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('District') && l.textContent.includes('Place of Offence'));
+                    if (label && label.parentElement) {
+                        const select = label.parentElement.querySelector('select');
+                        return select?.value || '';
+                    }
+                    return '';
+                })(),
+                jurisdictionArea: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('Jurisdiction Area/Mandal'));
+                    if (label && label.parentElement) {
+                        const input = label.parentElement.querySelector('input');
+                        return input?.value || '';
+                    }
+                    return '';
+                })(),
+                wardColonyVillage: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('Ward/Colony/Village'));
+                    if (label && label.parentElement) {
+                        const select = label.parentElement.querySelector('select');
+                        return select?.value || '';
+                    }
+                    return '';
+                })(),
+                pinCode: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('Pin Code') && l.textContent.includes('Place of Offence'));
+                    if (label && label.parentElement) {
+                        const select = label.parentElement.querySelector('select');
+                        return select?.value || '';
+                    }
+                    return '';
+                })(),
+                latitude: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('Latitude'));
+                    if (label && label.parentElement) {
+                        const input = label.parentElement.querySelector('input');
+                        return input?.value || '';
+                    }
+                    return '';
+                })(),
+                longitude: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('Longitude'));
+                    if (label && label.parentElement) {
+                        const input = label.parentElement.querySelector('input');
+                        return input?.value || '';
+                    }
+                    return '';
+                })(),
+                
+                // Complainant Details
+                complainant: collectPersonData('complainant'),
+                
+                // Accused Details
+                accused: collectPersonData('accused'),
+                
+                // Victim Details
+                victim: collectPersonData('victim'),
+                
+                // Property Details
+                licenseNumber: document.getElementById('licenseNumber')?.value || '',
+                isLicenseCase: document.getElementById('license_yes')?.checked || false,
+                isPropertyStolen: document.getElementById('property_yes')?.checked || false,
+                
+                // Brief Facts
+                briefFacts: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('Brief Facts'));
+                    if (label && label.parentElement) {
+                        const textarea = label.parentElement.querySelector('textarea');
+                        return textarea?.value || '';
+                    }
+                    return '';
+                })()
+            };
+
+            return firData;
+        }
+
+        // Helper function to get table data
+        function getTableData(tableId) {
+            const table = document.getElementById(tableId);
+            if (!table) return [];
+            
+            const rows = table.querySelectorAll('tbody tr.data-row');
+            const data = [];
+            
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length > 0) {
+                    const rowData = {};
+                    cells.forEach((cell, index) => {
+                        rowData[`col${index}`] = cell.textContent.trim();
+                    });
+                    data.push(rowData);
+                }
+            });
+            
+            return data;
+        }
+
+        // Helper function to collect person data (complainant, accused, victim)
+        function collectPersonData(personType) {
+            const prefix = personType === 'complainant' ? '' : 
+                          personType === 'accused' ? 'accused' : 
+                          personType === 'victim' ? 'victim' : '';
+            
+            const getFieldByLabel = (labelText) => {
+                const labels = Array.from(document.querySelectorAll('label'));
+                const label = labels.find(l => l.textContent.includes(labelText));
+                if (label && label.parentElement) {
+                    const input = label.parentElement.querySelector('input, select, textarea');
+                    return input?.value || '';
+                }
+                return '';
+            };
+
+            const getFieldById = (suffix) => {
+                const id = prefix ? `${prefix}${suffix.charAt(0).toUpperCase() + suffix.slice(1)}` : suffix;
+                const element = document.getElementById(id);
+                return element?.value || '';
+            };
+
+            const getDobField = () => {
+                const dobId = `dob${personType.charAt(0).toUpperCase() + personType.slice(1)}`;
+                const element = document.getElementById(dobId);
+                return element?.value || '';
+            };
+
+            // Get phone number from the specific section
+            const getPhoneNumber = () => {
+                let section;
+                if (personType === 'complainant') {
+                    section = document.querySelector('.complainant-form-wrapper');
+                } else if (personType === 'accused') {
+                    section = document.querySelector('.accused-form-wrapper');
+                } else {
+                    section = document.querySelector('.accused-form-wrapper'); // Victim uses same structure
+                }
+                if (section) {
+                    const phoneInput = section.querySelector('.phone-input-wrapper input.phone-number');
+                    return phoneInput?.value || '';
+                }
+                return '';
+            };
+
+            return {
+                name: getFieldByLabel('Name') || '',
+                surname: getFieldByLabel('Surname') || '',
+                aliasName: getFieldByLabel('Alias Name') || '',
+                relationType: getFieldByLabel('Relation Type') || '',
+                fatherSpouseGuardian: getFieldByLabel('Father/Spouse/Guardian/Mother Name') || '',
+                gender: getFieldByLabel('Gender') || '',
+                dateOfBirth: getDobField(),
+                age: getFieldByLabel('Age') || '',
+                occupation: getFieldByLabel('Occupation') || '',
+                educationalQualification: getFieldByLabel('Educational Qualification') || '',
+                caste: getFieldByLabel('Caste') || '',
+                subCaste: getFieldByLabel('Sub Caste') || '',
+                religion: getFieldByLabel('Religion') || '',
+                nationality: getFieldByLabel('Nationality') || '',
+                phoneNumber: getPhoneNumber(),
+                email: getFieldByLabel('Email ID') || '',
+                identityType: getFieldByLabel('Identity Type') || '',
+                identityNumber: getFieldByLabel('Identity Number') || '',
+                presentAddress: collectAddressData(personType, 'present'),
+                permanentAddress: collectAddressData(personType, 'permanent')
+            };
+        }
+
+        // Helper function to collect address data
+        function collectAddressData(personType, addressType) {
+            const prefix = personType === 'complainant' ? '' : 
+                          personType === 'accused' ? 'accused' : 
+                          personType === 'victim' ? 'victim' : '';
+            
+            const getField = (fieldSuffix) => {
+                const id = prefix ? 
+                    `${prefix}${addressType.charAt(0).toUpperCase() + addressType.slice(1)}${fieldSuffix.charAt(0).toUpperCase() + fieldSuffix.slice(1)}` : 
+                    `${addressType}${fieldSuffix.charAt(0).toUpperCase() + fieldSuffix.slice(1)}`;
+                const element = document.getElementById(id);
+                return element?.value || '';
+            };
+
+            return {
+                houseNo: getField('HouseNo') || '',
+                streetRoadNo: getField('Street') || '',
+                wardColony: getField('Ward') || '',
+                landmark: getField('Landmark') || '',
+                residencyType: getField('Residency') || '',
+                country: getField('Country') || '',
+                state: getField('State') || '',
+                district: getField('District') || '',
+                areaMandal: getField('Area') || '',
+                localityVillage: getField('Locality') || '',
+                pinCode: getField('Pin') || ''
+            };
+        }
+
+        // Function to save FIR data to cookies
+        function saveFIRData(status) {
+            const firData = collectFIRData();
+            firData.status = status;
+            firData.savedAt = new Date().toISOString();
+
+            if (editFIRId || currentFIRId) {
+                const id = editFIRId || currentFIRId;
+                FIRService.updateFIR(id, firData);
+                ToastService.success('FIR Draft saved successfully!');
+            } else {
+                const newId = FIRService.saveFIR(firData);
+                currentFIRId = newId;
+                // Update URL without reload
+                const newUrl = window.location.pathname + '?id=' + newId;
+                window.history.pushState({}, '', newUrl);
+                ToastService.success('FIR Draft saved successfully!');
+            }
+        }
+
+        // Load Acts & Sections table data
+        function loadActsSectionsTable(actsSectionsData) {
+            const tableBody = document.getElementById('actsSectionsTableBody');
+            if (!tableBody || !actsSectionsData || !Array.isArray(actsSectionsData)) return;
+
+            // Clear existing rows
+            tableBody.innerHTML = '';
+
+            actsSectionsData.forEach((rowData, index) => {
+                // Skip save-row type entries
+                if (!rowData.col1 && !rowData.col2 && !rowData.col3) return;
+
+                const row = document.createElement('tr');
+                row.className = 'data-row';
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${rowData.col1 || ''}</td>
+                    <td>${rowData.col2 || ''}</td>
+                    <td><a href="#" class="link-blue delete-row">Delete</a></td>
+                `;
+
+                // Add delete functionality
+                const deleteLink = row.querySelector('.delete-row');
+                if (deleteLink) {
+                    deleteLink.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        row.remove();
+                        updateSerialNumbers(tableBody);
+                    });
+                }
+
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Load Major Minor table data
+        function loadMajorMinorTable(majorMinorData) {
+            const tableBody = document.getElementById('majorMinorTableBody');
+            if (!tableBody || !majorMinorData || !Array.isArray(majorMinorData)) return;
+
+            // Clear existing rows
+            tableBody.innerHTML = '';
+
+            majorMinorData.forEach((rowData, index) => {
+                // Skip empty entries
+                if (!rowData.col1 && !rowData.col2 && !rowData.col3 && !rowData.col4) return;
+
+                const row = document.createElement('tr');
+                row.className = 'data-row';
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${rowData.col1 || ''}</td>
+                    <td>${rowData.col2 || ''}</td>
+                    <td>${rowData.col3 || ''}</td>
+                    <td><a href="#" class="link-blue delete-row">Delete</a></td>
+                `;
+
+                // Add delete functionality
+                const deleteLink = row.querySelector('.delete-row');
+                if (deleteLink) {
+                    deleteLink.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        row.remove();
+                        updateSerialNumbers(tableBody);
+                    });
+                }
+
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Function to load FIR data for editing
+        function loadFIRData(id) {
+            const fir = FIRService.getFIR(id);
+            if (!fir) {
+                ToastService.error('FIR not found!');
+                setTimeout(() => {
+                    window.location.href = 'home.html';
+                }, 1500);
+                return;
+            }
+
+            currentFIRId = id;
+
+            // Load FIR Type
+            if (fir.firType) {
+                const radios = document.querySelectorAll('input[name="fir_type"]');
+                radios.forEach(radio => {
+                    const labelText = radio.parentElement.textContent.trim();
+                    if ((fir.firType === 'ZERO FIR' && labelText.includes('ZERO FIR')) ||
+                        (fir.firType === 'REGULAR FIR' && labelText.includes('REGULAR FIR'))) {
+                        radio.checked = true;
+                    }
+                });
+            } else if (fir.actsSections && fir.actsSections.firType) {
+                const radios = document.querySelectorAll('input[name="fir_type"]');
+                radios.forEach(radio => {
+                    const labelText = radio.parentElement.textContent.trim();
+                    if ((fir.actsSections.firType === 'ZERO FIR' && labelText.includes('ZERO FIR')) ||
+                        (fir.actsSections.firType === 'REGULAR FIR' && labelText.includes('REGULAR FIR'))) {
+                        radio.checked = true;
+                    }
+                });
+            }
+
+            // Load Acts & Sections data (check both old structure and new actsSections structure)
+            const actsSectionsData = fir.actsSections || fir;
+            
+            if (actsSectionsData.crimeType) {
+                const crimeTypeSelect = document.getElementById('crimeType');
+                if (crimeTypeSelect) {
+                    crimeTypeSelect.value = actsSectionsData.crimeType;
+                    // Trigger change event to enable crime sub type if needed
+                    if (crimeTypeSelect.value && crimeTypeSelect.value !== '') {
+                        const crimeSubTypeSelect = document.getElementById('crimeSubType');
+                        if (crimeSubTypeSelect) {
+                            crimeSubTypeSelect.disabled = false;
+                        }
+                    }
+                }
+            }
+            
+            if (actsSectionsData.crimeSubType) {
+                const crimeSubTypeSelect = document.getElementById('crimeSubType');
+                if (crimeSubTypeSelect) {
+                    crimeSubTypeSelect.value = actsSectionsData.crimeSubType;
+                }
+            }
+            
+            if (actsSectionsData.gravity) {
+                const labels = Array.from(document.querySelectorAll('label'));
+                const label = labels.find(l => l.textContent.includes('Gravity'));
+                if (label && label.parentElement) {
+                    const select = label.parentElement.querySelector('select');
+                    if (select) select.value = actsSectionsData.gravity;
+                }
+            }
+            
+            if (actsSectionsData.petitionNumber) {
+                const labels = Array.from(document.querySelectorAll('label'));
+                const label = labels.find(l => l.textContent.includes('Petition Number'));
+                if (label && label.parentElement) {
+                    const input = label.parentElement.querySelector('input');
+                    if (input) input.value = actsSectionsData.petitionNumber;
+                }
+            }
+
+            // Load dates
+            if (actsSectionsData.fromDate) {
+                const fromDateInput = document.getElementById('fromDate');
+                if (fromDateInput) fromDateInput.value = actsSectionsData.fromDate;
+            }
+            
+            if (actsSectionsData.toDate) {
+                const toDateInput = document.getElementById('toDate');
+                if (toDateInput) toDateInput.value = actsSectionsData.toDate;
+            }
+            
+            if (actsSectionsData.priorTo) {
+                const priorToInput = document.getElementById('priorTo');
+                if (priorToInput) priorToInput.value = actsSectionsData.priorTo;
+            }
+            
+            if (actsSectionsData.infoReceivedDate) {
+                const infoReceivedDateInput = document.getElementById('infoReceivedDate');
+                if (infoReceivedDateInput) infoReceivedDateInput.value = actsSectionsData.infoReceivedDate;
+            }
+            
+            if (actsSectionsData.gdDate) {
+                const gdDateInput = document.getElementById('gdDate');
+                if (gdDateInput) gdDateInput.value = actsSectionsData.gdDate;
+            }
+            
+            if (actsSectionsData.firDate) {
+                const firDateInput = document.getElementById('firDate');
+                if (firDateInput) firDateInput.value = actsSectionsData.firDate;
+            }
+            
+            if (actsSectionsData.timePeriod) {
+                const labels = Array.from(document.querySelectorAll('label'));
+                const label = labels.find(l => l.textContent.includes('Time Period'));
+                if (label && label.parentElement) {
+                    const input = label.parentElement.querySelector('input');
+                    if (input) input.value = actsSectionsData.timePeriod;
+                }
+            }
+            
+            if (actsSectionsData.informationType) {
+                const labels = Array.from(document.querySelectorAll('label'));
+                const label = labels.find(l => l.textContent.includes('Information Type'));
+                if (label && label.parentElement) {
+                    const select = label.parentElement.querySelector('select');
+                    if (select) select.value = actsSectionsData.informationType;
+                }
+            }
+            
+            if (actsSectionsData.gdNumber) {
+                const labels = Array.from(document.querySelectorAll('label'));
+                const label = labels.find(l => l.textContent.includes('GD Number'));
+                if (label && label.parentElement) {
+                    const input = label.parentElement.querySelector('input');
+                    if (input) input.value = actsSectionsData.gdNumber;
+                }
+            }
+            
+            if (actsSectionsData.reasonForDelay) {
+                const labels = Array.from(document.querySelectorAll('label'));
+                const label = labels.find(l => l.textContent.includes('Reason for Delay'));
+                if (label && label.parentElement) {
+                    const textarea = label.parentElement.querySelector('textarea');
+                    if (textarea) textarea.value = actsSectionsData.reasonForDelay;
+                }
+            }
+            
+            // Load Acts & Sections table data
+            if (actsSectionsData.actsSections && Array.isArray(actsSectionsData.actsSections) && actsSectionsData.actsSections.length > 0) {
+                loadActsSectionsTable(actsSectionsData.actsSections);
+            }
+            
+            // Load Major Minor table data
+            if (actsSectionsData.majorMinor && Array.isArray(actsSectionsData.majorMinor) && actsSectionsData.majorMinor.length > 0) {
+                loadMajorMinorTable(actsSectionsData.majorMinor);
+            }
+
+            // Refresh flatpickr instances after loading values (wait for flatpickr to be initialized)
+            setTimeout(() => {
+                document.querySelectorAll('.datetime-picker').forEach(input => {
+                    if (input._flatpickr && input.value) {
+                        try {
+                            input._flatpickr.setDate(input.value, false);
+                        } catch (e) {
+                            console.warn('Error setting date for flatpickr:', e);
+                        }
+                    }
+                });
+            }, 500);
+
+            // Load person data
+            if (fir.complainant) populatePersonData(fir.complainant, 'complainant');
+            if (fir.accused) populatePersonData(fir.accused, 'accused');
+            if (fir.victim) populatePersonData(fir.victim, 'victim');
+
+            // Load place of offence (check both old structure and occurrence structure)
+            const occurrenceData = fir.occurrence || fir;
+            if (occurrenceData.placeOfOffence) {
+                const radio = document.querySelector(`input[name="place_of_offence"][value="${occurrenceData.placeOfOffence}"]`);
+                if (radio) radio.checked = true;
+            }
+            
+            // Load other occurrence fields
+            if (occurrenceData.directionsFromPS) {
+                const labels = Array.from(document.querySelectorAll('label'));
+                const label = labels.find(l => l.textContent.includes('Directions From PS'));
+                if (label && label.parentElement) {
+                    const select = label.parentElement.querySelector('select');
+                    if (select) select.value = occurrenceData.directionsFromPS;
+                }
+            }
+            
+            if (occurrenceData.distanceFromPS) {
+                const labels = Array.from(document.querySelectorAll('label'));
+                const label = labels.find(l => l.textContent.includes('Distance From PS'));
+                if (label && label.parentElement) {
+                    const input = label.parentElement.querySelector('input');
+                    if (input) input.value = occurrenceData.distanceFromPS;
+                }
+            }
+            
+            if (occurrenceData.beatNo) {
+                const labels = Array.from(document.querySelectorAll('label'));
+                const label = labels.find(l => l.textContent.includes('Beat No'));
+                if (label && label.parentElement) {
+                    const input = label.parentElement.querySelector('input');
+                    if (input) input.value = occurrenceData.beatNo;
+                }
+            }
+            
+            if (occurrenceData.placeHouseNo) {
+                const labels = Array.from(document.querySelectorAll('label'));
+                const label = labels.find(l => l.textContent.includes('Place/House No'));
+                if (label && label.parentElement) {
+                    const input = label.parentElement.querySelector('input');
+                    if (input) input.value = occurrenceData.placeHouseNo;
+                }
+            }
+            
+            if (occurrenceData.streetRoadNo) {
+                const labels = Array.from(document.querySelectorAll('label'));
+                const label = labels.find(l => l.textContent.includes('Street/Road Number'));
+                if (label && label.parentElement) {
+                    const input = label.parentElement.querySelector('input');
+                    if (input) input.value = occurrenceData.streetRoadNo;
+                }
+            }
+            
+            if (occurrenceData.landmarkMilestone) {
+                const labels = Array.from(document.querySelectorAll('label'));
+                const label = labels.find(l => l.textContent.includes('Landmark/Milestone'));
+                if (label && label.parentElement) {
+                    const input = label.parentElement.querySelector('input');
+                    if (input) input.value = occurrenceData.landmarkMilestone;
+                }
+            }
+            
+            if (occurrenceData.district) {
+                const labels = Array.from(document.querySelectorAll('label'));
+                const label = labels.find(l => l.textContent.includes('District') && l.textContent.includes('Place of Offence'));
+                if (label && label.parentElement) {
+                    const select = label.parentElement.querySelector('select');
+                    if (select) select.value = occurrenceData.district;
+                }
+            }
+            
+            if (occurrenceData.jurisdictionArea) {
+                const labels = Array.from(document.querySelectorAll('label'));
+                const label = labels.find(l => l.textContent.includes('Jurisdiction Area/Mandal'));
+                if (label && label.parentElement) {
+                    const input = label.parentElement.querySelector('input');
+                    if (input) input.value = occurrenceData.jurisdictionArea;
+                }
+            }
+            
+            if (occurrenceData.wardColonyVillage) {
+                const labels = Array.from(document.querySelectorAll('label'));
+                const label = labels.find(l => l.textContent.includes('Ward/Colony/Village'));
+                if (label && label.parentElement) {
+                    const select = label.parentElement.querySelector('select');
+                    if (select) select.value = occurrenceData.wardColonyVillage;
+                }
+            }
+            
+            if (occurrenceData.pinCode) {
+                const labels = Array.from(document.querySelectorAll('label'));
+                const label = labels.find(l => l.textContent.includes('Pin Code') && l.textContent.includes('Place of Offence'));
+                if (label && label.parentElement) {
+                    const select = label.parentElement.querySelector('select');
+                    if (select) select.value = occurrenceData.pinCode;
+                }
+            }
+            
+            if (occurrenceData.latitude) {
+                const labels = Array.from(document.querySelectorAll('label'));
+                const label = labels.find(l => l.textContent.includes('Latitude'));
+                if (label && label.parentElement) {
+                    const input = label.parentElement.querySelector('input');
+                    if (input) input.value = occurrenceData.latitude;
+                }
+            }
+            
+            if (occurrenceData.longitude) {
+                const labels = Array.from(document.querySelectorAll('label'));
+                const label = labels.find(l => l.textContent.includes('Longitude'));
+                if (label && label.parentElement) {
+                    const input = label.parentElement.querySelector('input');
+                    if (input) input.value = occurrenceData.longitude;
+                }
+            }
+
+            // Load property details
+            if (fir.isLicenseCase && document.getElementById('license_yes')) {
+                document.getElementById('license_yes').checked = true;
+            }
+            if (fir.licenseNumber) {
+                document.getElementById('licenseNumber').value = fir.licenseNumber;
+            }
+            if (fir.isPropertyStolen && document.getElementById('property_yes')) {
+                document.getElementById('property_yes').checked = true;
+            }
+
+            // Trigger property fields toggle
+            if (typeof togglePropertyFields === 'function') {
+                togglePropertyFields();
+            }
+        }
+
+        // Helper function to populate person data
+        function populatePersonData(data, personType) {
+            const prefix = personType === 'complainant' ? '' : 
+                          personType === 'accused' ? 'accused' : 'victim';
+            const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
+            
+            const setField = (fieldName, value) => {
+                if (!value) return;
+                const id = prefix ? `${prefix}${capitalize(fieldName)}` : fieldName;
+                const element = document.getElementById(id);
+                if (element) element.value = value;
+            };
+
+            if (data.name) setField('Name', data.name);
+            if (data.surname) setField('Surname', data.surname);
+            if (data.gender) setField('Gender', data.gender);
+            if (data.dateOfBirth) {
+                const dobField = document.getElementById(`dob${capitalize(personType)}`);
+                if (dobField) dobField.value = data.dateOfBirth;
+            }
+            if (data.nationality) setField('Nationality', data.nationality);
+            
+            // Populate addresses
+            if (data.presentAddress) populateAddressData(data.presentAddress, personType, 'present');
+            if (data.permanentAddress) populateAddressData(data.permanentAddress, personType, 'permanent');
+        }
+
+        // Helper function to populate address data
+        function populateAddressData(addressData, personType, addressType) {
+            const prefix = personType === 'complainant' ? '' : 
+                          personType === 'accused' ? 'accused' : 'victim';
+            const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
+            
+            const setField = (fieldName, value) => {
+                if (!value) return;
+                const id = prefix ? `${prefix}${capitalize(addressType)}${capitalize(fieldName)}` : `${addressType}${capitalize(fieldName)}`;
+                const element = document.getElementById(id);
+                if (element) element.value = value;
+            };
+
+            Object.keys(addressData).forEach(key => {
+                const fieldName = key.replace(/([A-Z])/g, '$1').replace(/^./, str => str.toUpperCase());
+                setField(fieldName, addressData[key]);
+            });
+        }
+
+        // Basic form validation
+        function validateForm() {
+            const crimeType = document.getElementById('crimeType')?.value;
+            const infoReceivedDate = document.getElementById('infoReceivedDate')?.value;
+            
+            if (!crimeType) {
+                ToastService.warning('Please select Crime Type');
+                return false;
+            }
+            
+            if (!infoReceivedDate) {
+                ToastService.warning('Please select Information Received Date');
+                return false;
+            }
+            
+            return true;
+        }
+
     </script>
 </body>
 </html>
