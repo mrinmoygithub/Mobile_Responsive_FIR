@@ -10,11 +10,134 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Font Awesome (CDN) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Flatpickr CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="style.css">
     <!-- Toast Service - Must load first to override alert/confirm -->
     <script src="toast.js"></script>
+    <style>
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            overflow: auto;
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 700px;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            animation: modalFadeIn 0.3s ease-out;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--primary-blue);
+            color: white;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-body {
+            padding: 24px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .modal-footer {
+            padding: 16px 24px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            background: #f9f9f9;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .modal-footer .btn {
+            padding: 8px 20px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .modal-body .grid-2 {
+            margin-bottom: 20px;
+        }
+
+        .modal-body .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                width: 95%;
+                max-height: 95vh;
+            }
+
+            .modal-body {
+                padding: 20px;
+            }
+
+            .modal-body .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -160,24 +283,21 @@
                     <div class="card inner-card">
                         <h4 class="card-title">Offence Occurrence Date & Time</h4>
                         <div class="grid grid-4">
-                            <div class="form-group date-icon">
+                            <div class="form-group">
                                 <label>From Date</label>
-                                <input type="text" class="form-control datetime-picker" id="fromDate" value="" placeholder="Select Date and Time">
-                                <i class="far fa-calendar-alt"></i>
+                                <input type="datetime-local" class="form-control" id="fromDate" value="">
                             </div>
-                            <div class="form-group date-icon">
+                            <div class="form-group">
                                 <label>To Date</label>
-                                <input type="text" class="form-control datetime-picker" id="toDate" value="" placeholder="Select Date and Time">
-                                <i class="far fa-calendar-alt"></i>
+                                <input type="datetime-local" class="form-control" id="toDate" value="">
                             </div>
                             <div class="form-group">
                                 <label>Time Period</label>
                                 <input type="text" class="form-control" value="0">
                             </div>
-                            <div class="form-group date-icon">
+                            <div class="form-group">
                                 <label>Prior To</label>
-                                <input type="text" class="form-control datetime-picker" id="priorTo" placeholder="Select Date and Time">
-                                <i class="far fa-calendar-alt"></i>
+                                <input type="datetime-local" class="form-control" id="priorTo">
                             </div>
                         </div>
                         <div class="info-note">
@@ -189,10 +309,9 @@
                     <div class="card inner-card">
                         <h4 class="card-title">Offence Information Received</h4>
                         <div class="grid grid-5-custom">
-                            <div class="form-group date-icon">
+                            <div class="form-group">
                                 <label class="required-field">Information Received at PS</label>
-                                <input type="text" class="form-control datetime-picker" id="infoReceivedDate" value="" placeholder="Select Date and Time">
-                                <i class="far fa-calendar-alt"></i>
+                                <input type="datetime-local" class="form-control" id="infoReceivedDate" value="">
                             </div>
                             <div class="form-group">
                                 <label class="required-field">Information Type</label>
@@ -205,18 +324,16 @@
                             </div>
                             <div class="form-group">
                                 <label class="required-field">GD Number</label>
-                                <input type="text" class="form-control disabled" value="" readonly>
-                                <a href="#" class="field-link">GD Entry</a>
+                                <input type="text" class="form-control disabled" id="gdNumber" value="" readonly>
+                                <a href="#" class="field-link" onclick="openGDEntryModal(); return false;">GD Entry</a>
                             </div>
-                            <div class="form-group date-icon">
+                            <div class="form-group">
                                 <label class="required-field">GD Date & Time</label>
-                                <input type="text" class="form-control disabled datetime-picker" id="gdDate" value="" readonly placeholder="Select Date and Time">
-                                <i class="far fa-calendar-alt"></i>
+                                <input type="datetime-local" class="form-control disabled" id="gdDate" value="" readonly>
                             </div>
-                            <div class="form-group date-icon">
+                            <div class="form-group">
                                 <label class="required-field">FIR Date & Time</label>
-                                <input type="text" class="form-control disabled datetime-picker" id="firDate" value="" readonly placeholder="Select Date and Time">
-                                <i class="far fa-calendar-alt"></i>
+                                <input type="datetime-local" class="form-control disabled" id="firDate" value="" readonly>
                             </div>
                         </div>
                         
@@ -520,10 +637,9 @@
                                     </div>
                                 </div>
                                 <div class="grid grid-4">
-                                    <div class="form-group date-icon">
+                                    <div class="form-group">
                                         <label>Date of Birth</label>
-                                        <input type="text" class="form-control datetime-picker" id="dobComplainant" placeholder="Select date">
-                                        <i class="far fa-calendar-alt"></i>
+                                        <input type="date" class="form-control" id="dobComplainant">
                                     </div>
                                     <div class="form-group">
                                         <label>Age</label>
@@ -874,10 +990,9 @@
                                         <option>Other</option>
                                     </select>
                                 </div>
-                                <div class="form-group date-icon">
+                                <div class="form-group">
                                     <label>Date of Birth</label>
-                                    <input type="text" class="form-control datetime-picker" id="dobAccused" placeholder="Select date">
-                                    <i class="far fa-calendar-alt"></i>
+                                    <input type="date" class="form-control" id="dobAccused">
                                 </div>
                             </div>
                             <div class="grid grid-4">
@@ -1190,10 +1305,9 @@
                                         <option>Other</option>
                                     </select>
                                 </div>
-                                <div class="form-group date-icon">
+                                <div class="form-group">
                                     <label>Date of Birth</label>
-                                    <input type="text" class="form-control datetime-picker" id="dobVictim" placeholder="Select date">
-                                    <i class="far fa-calendar-alt"></i>
+                                    <input type="date" class="form-control" id="dobVictim">
                                 </div>
                             </div>
                             <div class="grid grid-4">
@@ -1538,8 +1652,67 @@
         </div>
     </footer>
 
-    <!-- Flatpickr JS -->
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- GD Entry Modal -->
+    <div id="gdEntryModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>GD Entry</h2>
+                <button class="modal-close" onclick="closeGDEntryModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="gdEntryForm">
+                    <div class="grid grid-2">
+                        <div class="form-group">
+                            <label class="required-field">GD Entry Number</label>
+                            <input type="text" class="form-control" id="gdEntryNumber" placeholder="Enter GD Entry Number" value="234234234">
+                        </div>
+                        <div class="form-group">
+                            <label class="required-field">GD Entry Date</label>
+                            <input type="datetime-local" class="form-control" id="gdEntryDate" value="2026-01-06T02:00">
+                        </div>
+                        <div class="form-group">
+                            <label class="required-field">From Date</label>
+                            <input type="datetime-local" class="form-control" id="gdFromDate">
+                        </div>
+                        <div class="form-group">
+                            <label class="required-field">To Date</label>
+                            <input type="datetime-local" class="form-control" id="gdToDate">
+                        </div>
+                        <div class="form-group">
+                            <label class="required-field">Entry Officer Name</label>
+                            <select class="form-control" id="entryOfficerName" required>
+                                <option value="">-- Select Officer --</option>
+                                <option value="AURVA ROJA" selected>AURVA ROJA</option>
+                                <option value="Officer 2">Officer 2</option>
+                                <option value="Officer 3">Officer 3</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="required-field">Type Of GD Entry</label>
+                            <select class="form-control" id="gdEntryType" required>
+                                <option value="">-- Select Type --</option>
+                                <option value="FIR/Criminal case" selected>FIR/Criminal case</option>
+                                <option value="Theft">Theft</option>
+                                <option value="Assault">Assault</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="required-field">GD Entry Details in Brief</label>
+                        <textarea class="form-control" id="gdEntryDetails" rows="4" placeholder="Enter GD Entry Details" required>Test</textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link" onclick="closeGDEntryModal()">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="saveGDEntry()">Save</button>
+            </div>
+        </div>
+    </div>
+
     <script src="auth.js"></script>
     <script>
         // Check authentication
@@ -2331,107 +2504,7 @@
             });
         }
 
-        // Initialize Date-Time Pickers
-        const datetimePickerConfig = {
-            enableTime: true,
-            dateFormat: "d-m-Y H:i:S",
-            time_24hr: true,
-            allowInput: true,
-            clickOpens: true,
-            minuteIncrement: 1,
-            enableSeconds: true,
-            static: false,
-            inline: false,
-            locale: {
-                firstDayOfWeek: 0
-            },
-            onReady: function(selectedDates, dateStr, instance) {
-                const calendarContainer = instance.calendarContainer;
-                const timeContainer = calendarContainer.querySelector('.flatpickr-time');
-                
-                // Ensure time container is visible
-                if (timeContainer) {
-                    timeContainer.style.display = 'flex';
-                    timeContainer.style.visibility = 'visible';
-                    timeContainer.style.opacity = '1';
-                    
-                    // Ensure all time inputs are visible
-                    const timeInputs = timeContainer.querySelectorAll('input');
-                    timeInputs.forEach(input => {
-                        input.style.display = 'inline-block';
-                        input.style.visibility = 'visible';
-                    });
-                    
-                    // Create button container at the bottom
-                    let buttonContainer = calendarContainer.querySelector('.flatpickr-buttons');
-                    if (!buttonContainer) {
-                        buttonContainer = document.createElement('div');
-                        buttonContainer.className = 'flatpickr-buttons';
-                        calendarContainer.appendChild(buttonContainer);
-                    }
-                    
-                    // Add "Now" button
-                    if (!buttonContainer.querySelector('.flatpickr-now-btn')) {
-                        const nowButton = document.createElement('button');
-                        nowButton.type = 'button';
-                        nowButton.className = 'flatpickr-now-btn';
-                        nowButton.textContent = 'Now';
-                        nowButton.addEventListener('click', function(e) {
-                            e.preventDefault();
-                            instance.setDate(new Date(), true);
-                        });
-                        buttonContainer.appendChild(nowButton);
-                    }
-                    
-                    // Ensure OK button exists (flatpickr creates it, but we style it)
-                    const confirmBtn = calendarContainer.querySelector('.flatpickr-confirm');
-                    if (confirmBtn && !buttonContainer.contains(confirmBtn)) {
-                        buttonContainer.appendChild(confirmBtn);
-                    }
-                }
-            },
-            onOpen: function(selectedDates, dateStr, instance) {
-                // Ensure time picker is visible when calendar opens
-                setTimeout(function() {
-                    const timeContainer = instance.calendarContainer.querySelector('.flatpickr-time');
-                    if (timeContainer) {
-                        timeContainer.style.display = 'flex';
-                        timeContainer.style.visibility = 'visible';
-                        timeContainer.style.opacity = '1';
-                    }
-                }, 10);
-            }
-        };
-
-        // Date-only picker config for Date of Birth
-        const dateOnlyPickerConfig = {
-            enableTime: false,
-            dateFormat: "d-m-Y",
-            allowInput: true,
-            clickOpens: true,
-            static: false,
-            inline: false,
-            locale: {
-                firstDayOfWeek: 0
-            }
-        };
-
-        // Initialize all datetime pickers
-        document.querySelectorAll('.datetime-picker').forEach(function(input) {
-            if (!input.readOnly) {
-                // Use date-only config for DOB fields
-                const config = (input.id === 'dobComplainant' || input.id === 'dobAccused' || input.id === 'dobVictim') ? dateOnlyPickerConfig : datetimePickerConfig;
-                const picker = flatpickr(input, config);
-                
-                // Make calendar icon clickable
-                const icon = input.parentElement.querySelector('.far.fa-calendar-alt');
-                if (icon) {
-                    icon.addEventListener('click', function() {
-                        picker.open();
-                    });
-                }
-            }
-        });
+        // Date pickers are now native HTML datetime-local and date inputs
 
         // "Use same as Present" checkbox functionality for Complainant
         const sameAsPresentCheckbox = document.getElementById('sameAsPresent');
@@ -3270,18 +3343,7 @@
                 loadMajorMinorTable(actsSectionsData.majorMinor);
             }
 
-            // Refresh flatpickr instances after loading values (wait for flatpickr to be initialized)
-            setTimeout(() => {
-                document.querySelectorAll('.datetime-picker').forEach(input => {
-                    if (input._flatpickr && input.value) {
-                        try {
-                            input._flatpickr.setDate(input.value, false);
-                        } catch (e) {
-                            console.warn('Error setting date for flatpickr:', e);
-                        }
-                    }
-                });
-            }, 500);
+            // Date values are now native HTML inputs, no need for flatpickr refresh
 
             // Load person data
             if (fir.complainant) populatePersonData(fir.complainant, 'complainant');
@@ -3484,6 +3546,78 @@
             
             return true;
         }
+
+        // GD Entry Modal Functions
+        window.openGDEntryModal = function() {
+            const modal = document.getElementById('gdEntryModal');
+            if (modal) {
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            }
+        };
+
+        window.closeGDEntryModal = function() {
+            const modal = document.getElementById('gdEntryModal');
+            if (modal) {
+                modal.classList.remove('show');
+                document.body.style.overflow = '';
+            }
+        };
+
+        window.saveGDEntry = function() {
+            const form = document.getElementById('gdEntryForm');
+            if (!form) return;
+
+            const gdEntryNumber = document.getElementById('gdEntryNumber')?.value;
+            const gdEntryDate = document.getElementById('gdEntryDate')?.value;
+            const gdFromDate = document.getElementById('gdFromDate')?.value;
+            const gdToDate = document.getElementById('gdToDate')?.value;
+            const entryOfficerName = document.getElementById('entryOfficerName')?.value;
+            const gdEntryType = document.getElementById('gdEntryType')?.value;
+            const gdEntryDetails = document.getElementById('gdEntryDetails')?.value;
+
+            // Validate required fields
+            if (!gdEntryNumber || !gdEntryDate || !entryOfficerName || !gdEntryType || !gdEntryDetails) {
+                if (window.ToastService) {
+                    window.ToastService.error('Please fill in all required fields');
+                }
+                return;
+            }
+
+            // Update GD Number and GD Date in the form
+            const gdNumberInput = document.getElementById('gdNumber');
+            const gdDateInput = document.getElementById('gdDate');
+            
+            if (gdNumberInput) {
+                gdNumberInput.value = gdEntryNumber;
+            }
+            if (gdDateInput) {
+                gdDateInput.value = gdEntryDate;
+            }
+
+            // Save logic here (you can add your save functionality)
+            if (window.ToastService) {
+                window.ToastService.success('GD Entry saved successfully');
+            }
+
+            // Close modal after saving
+            closeGDEntryModal();
+        };
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('gdEntryModal');
+            if (event.target === modal) {
+                closeGDEntryModal();
+            }
+        };
+
+        // Close modal on ESC key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeGDEntryModal();
+            }
+        });
 
     </script>
 </body>
