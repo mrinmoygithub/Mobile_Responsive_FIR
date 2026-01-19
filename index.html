@@ -206,7 +206,7 @@
                 <div class="fir-options">
                     <span class="option-label">FIR Type</span>
                     <label class="radio-label">
-                        <input type="radio" name="fir_type" checked>
+                        <input type="radio" name="fir_type">
                         <span class="radio-custom"></span>
                         REGULAR FIR
                     </label>
@@ -293,7 +293,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Time Period</label>
-                                <input type="text" class="form-control" value="0">
+                                <input type="text" class="form-control" value="">
                             </div>
                             <div class="form-group">
                                 <label>Prior To</label>
@@ -340,7 +340,7 @@
                         
                         <div class="form-group mt-3">
                             <label class="required-field">Reason for Delay</label>
-                            <textarea class="form-control" rows="3">Test</textarea>
+                            <textarea class="form-control" rows="3"></textarea>
                         </div>
                     </div>
 
@@ -459,7 +459,7 @@
             </div>
 
             <!-- Occurrence Of Offence -->
-            <div class="accordion-item collapsed disabled" id="accordion-occurrence" data-section="2" data-completed="false">
+            <div class="accordion-item collapsed" id="accordion-occurrence" data-section="2" data-completed="false">
                 <div class="accordion-header">
                     <h3>Occurrence Of Offence <span class="required">*</span></h3>
                     <i class="fa-solid fa-angles-right"></i>
@@ -473,7 +473,7 @@
                         <!-- Radio Buttons for Place of Offence -->
                         <div class="radio-group mb-3">
                             <label class="radio-label">
-                                <input type="radio" name="place_of_offence" value="within" checked>
+                                <input type="radio" name="place_of_offence" value="within">
                                 <span class="radio-custom"></span>
                                 Within Police Station Limits
                             </label>
@@ -490,7 +490,7 @@
                                 <label class="required-field">Directions From PS</label>
                                 <select class="form-control">
                                     <option value="">-- Select Direction --</option>
-                                    <option value="east" selected>East</option>
+                                    <option value="east">East</option>
                                     <option value="west">West</option>
                                     <option value="north">North</option>
                                     <option value="south">South</option>
@@ -528,7 +528,7 @@
                                 <label>District</label>
                                 <select class="form-control">
                                     <option value="">-- Select District --</option>
-                                    <option value="ranga_reddy" selected>RANGA REDDY</option>
+                                    <option value="ranga_reddy">RANGA REDDY</option>
                                     <option value="hyderabad">Hyderabad</option>
                                     <option value="medchal">Medchal</option>
                                     <option value="sangareddy">Sangareddy</option>
@@ -546,7 +546,7 @@
                                 <label>Ward/Colony/Village</label>
                                 <select class="form-control">
                                     <option value="">-- Select Ward/Colony/Village --</option>
-                                    <option value="bakaram_jagir" selected>Bakaram Jagir</option>
+                                    <option value="bakaram_jagir">Bakaram Jagir</option>
                                     <option value="other">Other</option>
                                 </select>
                             </div>
@@ -554,7 +554,7 @@
                                 <label>Pin Code</label>
                                 <select class="form-control">
                                     <option value="">-- Select Pin Code --</option>
-                                    <option value="502032" selected>502032</option>
+                                    <option value="502032">502032</option>
                                     <option value="501203">501203</option>
                                     <option value="500001">500001</option>
                                     <option value="500002">500002</option>
@@ -566,7 +566,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Longitude</label>
-                                <input type="text" class="form-control" value="345">
+                                <input type="text" class="form-control" value="">
                             </div>
                         </div>
 
@@ -584,7 +584,7 @@
             </div>
 
             <!-- Complainant Details -->
-            <div class="accordion-item collapsed disabled" id="accordion-complainant" data-section="3" data-completed="false">
+            <div class="accordion-item collapsed" id="accordion-complainant" data-section="3" data-completed="false">
                 <div class="accordion-header">
                     <h3>Complainant Details <span class="required">*</span></h3>
                     <i class="fa-solid fa-angles-right"></i>
@@ -593,6 +593,12 @@
                     <div class="complainant-form-wrapper">
                         <!-- Left Side - Form -->
                         <div class="complainant-form-left">
+                            <!-- Top Right Demo Data Button -->
+                            <div style="text-align: right; margin-bottom: 15px;">
+                                <button type="button" class="btn btn-secondary" id="fillComplainantDemoData" style="padding: 8px 16px; font-size: 14px;">
+                                    <i class="fas fa-magic"></i> Demo Data
+                                </button>
+                            </div>
                             
                             <!-- Personal Information Section -->
                             <div class="card inner-card">
@@ -723,19 +729,22 @@
                                     <div class="form-group">
                                         <label class="required-field">Country</label>
                                         <select class="form-control" id="presentCountry">
-                                            <option value="India" selected>India</option>
+                                            <option value="">-- Select Country --</option>
+                                            <option value="India">India</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label class="required-field">State/UT</label>
                                         <select class="form-control" id="presentState">
                                             <option value="">-- Select State/UT --</option>
+                                            <option value="Telangana" selected>Telangana</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label class="required-field">District</label>
                                         <select class="form-control" id="presentDistrict">
                                             <option value="">-- Select District --</option>
+                                            <option value="Hyderabad" selected>Hyderabad</option>
                                         </select>
                                     </div>
                                 </div>
@@ -792,19 +801,22 @@
                                     <div class="form-group">
                                         <label class="required-field">Country</label>
                                         <select class="form-control" id="permanentCountry">
-                                            <option value="India" selected>India</option>
+                                            <option value="">-- Select Country --</option>
+                                            <option value="India">India</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label class="required-field">State/UT</label>
                                         <select class="form-control" id="permanentState">
                                             <option value="">-- Select State/UT --</option>
+                                            <option value="Telangana" selected>Telangana</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label class="required-field">District</label>
                                         <select class="form-control" id="permanentDistrict">
                                             <option value="">-- Select District --</option>
+                                            <option value="Hyderabad" selected>Hyderabad</option>
                                         </select>
                                     </div>
                                 </div>
@@ -832,7 +844,8 @@
                                         <label class="required-field">Phone Number</label>
                                         <div class="phone-input-wrapper">
                                             <select class="phone-code">
-                                                <option value="91" selected>91</option>
+                                                <option value="">-- Select --</option>
+                                                <option value="91">91</option>
                                             </select>
                                             <input type="text" class="form-control phone-number" placeholder="">
                                         </div>
@@ -876,7 +889,7 @@
 
                             <!-- Save Button -->
                             <div class="mt-3">
-                                <button class="btn-save-complainant" disabled><i class="fas fa-save"></i> SAVE</button>
+                                <button class="btn-save-complainant"><i class="fas fa-save"></i> SAVE</button>
                             </div>
 
                         </div>
@@ -886,32 +899,7 @@
                             <div class="complainant-info-card">
                                 <h4 class="card-title">Complainant Details</h4>
                                 <div class="info-item">
-                                    <span class="info-label">DCP</span>
-                                    <div class="info-actions">
-                                        <a href="#" class="info-link"><i class="fas fa-eye"></i> View</a>
-                                        <a href="#" class="info-link"><i class="fas fa-pencil-alt"></i> Edit</a>
-                                    </div>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-label">Rajendranagar</span>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-label">fsdf</span>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-label">Female, 0 Years</span>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-label">Accountant</span>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-label">9876532002</span>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-label">test, test, test</span>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-label">CHANDIGARH, 34234</span>
+                                    <span class="info-label">No complainant added yet</span>
                                 </div>
                             </div>
                         </div>
@@ -920,7 +908,7 @@
             </div>
 
             <!-- Accused Details -->
-            <div class="accordion-item collapsed disabled" id="accordion-accused" data-section="4" data-completed="false">
+            <div class="accordion-item collapsed" id="accordion-accused" data-section="4" data-completed="false">
                 <div class="accordion-header">
                     <h3>Accused Details <span class="required">*</span></h3>
                     <i class="fa-solid fa-angles-right"></i>
@@ -933,6 +921,9 @@
                                 <h4 class="accused-title"><span class="required">*</span>Accused Types</h4>
                             </div>
                             <div class="accused-header-right">
+                                <button type="button" class="btn btn-secondary" id="fillAccusedDemoData" style="padding: 8px 16px; font-size: 14px; margin-right: 15px;">
+                                    <i class="fas fa-magic"></i> Demo Data
+                                </button>
                                 <div class="form-group">
                                     <label>Select Category</label>
                                     <select class="form-control">
@@ -1087,12 +1078,14 @@
                                     <label>State/UT</label>
                                     <select class="form-control" id="accusedPresentState">
                                         <option value="">-- Select State/UT --</option>
+                                        <option value="Telangana" selected>Telangana</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label>District</label>
                                     <select class="form-control" id="accusedPresentDistrict">
                                         <option value="">-- Select District --</option>
+                                        <option value="Hyderabad" selected>Hyderabad</option>
                                     </select>
                                 </div>
                             </div>
@@ -1156,12 +1149,14 @@
                                     <label>State/UT</label>
                                     <select class="form-control" id="accusedPermanentState">
                                         <option value="">-- Select State/UT --</option>
+                                        <option value="Telangana" selected>Telangana</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label>District</label>
                                     <select class="form-control" id="accusedPermanentDistrict">
                                         <option value="">-- Select District --</option>
+                                        <option value="Hyderabad" selected>Hyderabad</option>
                                     </select>
                                 </div>
                             </div>
@@ -1235,7 +1230,7 @@
             </div>
 
             <!-- Victim Details -->
-            <div class="accordion-item collapsed disabled" id="accordion-victim" data-section="5" data-completed="false">
+            <div class="accordion-item collapsed" id="accordion-victim" data-section="5" data-completed="false">
                 <div class="accordion-header">
                     <h3>Victim Details</h3>
                     <i class="fa-solid fa-angles-right"></i>
@@ -1557,7 +1552,7 @@
             </div>
 
             <!-- Property Details -->
-            <div class="accordion-item collapsed disabled" id="accordion-property" data-section="6" data-completed="false">
+            <div class="accordion-item collapsed" id="accordion-property" data-section="6" data-completed="false">
                 <div class="accordion-header">
                     <h3>Property Details</h3>
                     <i class="fa-solid fa-angles-right"></i>
@@ -1634,7 +1629,7 @@
             </div>
 
             <!-- Brief Facts -->
-            <div class="accordion-item collapsed disabled" id="accordion-brief-facts" data-section="7" data-completed="false">
+            <div class="accordion-item collapsed" id="accordion-brief-facts" data-section="7" data-completed="false">
                 <div class="accordion-header">
                     <h3>Brief Facts <span class="required">*</span></h3>
                     <i class="fa-solid fa-angles-right"></i>
@@ -1642,7 +1637,7 @@
             </div>
 
             <!-- Upload Documents -->
-            <div class="accordion-item collapsed disabled" id="accordion-upload-docs" data-section="8" data-completed="false">
+            <div class="accordion-item collapsed" id="accordion-upload-docs" data-section="8" data-completed="false">
                 <div class="accordion-header">
                     <h3>Upload Documents <span class="required">*</span></h3>
                     <i class="fa-solid fa-angles-right"></i>
@@ -1761,31 +1756,24 @@
             }
         }
 
-        // Initialize accordions - disable all except first
+        // Initialize accordions - enable all accordions
         function initializeAccordions() {
             accordionSections.forEach((acc, index) => {
                 const accordionElement = document.getElementById(acc.id);
                 if (accordionElement) {
-                    if (index === 0) {
-                        // First accordion is always enabled but collapsed by default
-                        accordionElement.classList.remove('disabled');
-                        accordionElement.classList.remove('expanded');
-                        accordionElement.classList.add('collapsed');
-                        // Update icon
-                        const icon = accordionElement.querySelector('.accordion-header i');
-                        if (icon) {
-                            icon.className = 'fa-solid fa-angles-right';
-                        }
-                        // Ensure content is hidden (CSS will handle this via collapsed class)
-                        const content = accordionElement.querySelector('.accordion-content');
-                        if (content) {
-                            content.removeAttribute('style');
-                        }
-                    } else {
-                        // All others start disabled and collapsed
-                        accordionElement.classList.add('disabled');
-                        accordionElement.classList.remove('expanded');
-                        accordionElement.classList.add('collapsed');
+                    // All accordions are enabled but collapsed by default
+                    accordionElement.classList.remove('disabled');
+                    accordionElement.classList.remove('expanded');
+                    accordionElement.classList.add('collapsed');
+                    // Update icon
+                    const icon = accordionElement.querySelector('.accordion-header i');
+                    if (icon) {
+                        icon.className = 'fa-solid fa-angles-right';
+                    }
+                    // Ensure content is hidden (CSS will handle this via collapsed class)
+                    const content = accordionElement.querySelector('.accordion-content');
+                    if (content) {
+                        content.removeAttribute('style');
                     }
                 }
             });
@@ -1892,25 +1880,6 @@
                     return 'REGULAR FIR';
                 })()
             };
-
-            // Validate required fields
-            if (!actsSectionsData.crimeType) {
-                if (saveBtn) {
-                    saveBtn.disabled = false;
-                    saveBtn.classList.remove('loading');
-                }
-                ToastService.error('Please select Crime Type');
-                return;
-            }
-
-            if (!actsSectionsData.infoReceivedDate) {
-                if (saveBtn) {
-                    saveBtn.disabled = false;
-                    saveBtn.classList.remove('loading');
-                }
-                ToastService.error('Please select Information Received at PS date');
-                return;
-            }
 
             // Show loading overlay
             if (loadingOverlay) {
@@ -2026,15 +1995,6 @@
             }
 
             const occurrenceData = collectOccurrenceData();
-            
-            if (!currentFIRId && !editFIRId) {
-                if (saveBtn) {
-                    saveBtn.disabled = false;
-                    saveBtn.classList.remove('loading');
-                }
-                ToastService.warning('Please save Acts & Sections first');
-                return;
-            }
 
             // Show loading overlay
             if (loadingOverlay) {
@@ -2299,11 +2259,6 @@
                         
                         const item = this.parentElement;
                         if (!item) return;
-                        
-                        // Don't allow expansion if disabled
-                        if (item.classList.contains('disabled')) {
-                            return;
-                        }
                         
                         const icon = this.querySelector('i');
                         const content = item.querySelector('.accordion-content');
@@ -2754,6 +2709,58 @@
                     } else {
                         console.error('saveOccurrence is not a function');
                         ToastService.error('Error: Save function not found. Please refresh the page.');
+                    }
+                });
+            }
+
+            // Complainant Save Button
+            const saveComplainantBtn = document.querySelector('.btn-save-complainant');
+            if (saveComplainantBtn) {
+                saveComplainantBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (typeof saveComplainant === 'function') {
+                        saveComplainant();
+                    } else {
+                        validateComplainantForm();
+                    }
+                });
+            }
+
+            // Complainant Demo Data Button
+            const fillComplainantDemoBtn = document.getElementById('fillComplainantDemoData');
+            if (fillComplainantDemoBtn) {
+                fillComplainantDemoBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (typeof fillComplainantDemoData === 'function') {
+                        fillComplainantDemoData();
+                    }
+                });
+            }
+
+            // Accused Demo Data Button
+            const fillAccusedDemoBtn = document.getElementById('fillAccusedDemoData');
+            if (fillAccusedDemoBtn) {
+                fillAccusedDemoBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (typeof fillAccusedDemoData === 'function') {
+                        fillAccusedDemoData();
+                    }
+                });
+            }
+
+            // Accused Save Button
+            const saveAccusedBtn = document.querySelector('#accordion-accused .btn.btn-primary');
+            if (saveAccusedBtn) {
+                saveAccusedBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (typeof saveAccused === 'function') {
+                        saveAccused();
+                    } else {
+                        ToastService.warning('Save function not available. Please refresh the page.');
                     }
                 });
             }
@@ -3551,6 +3558,607 @@
             }
             
             return true;
+        }
+
+        // Fill Complainant Form with Demo Data
+        function fillComplainantDemoData() {
+            // Helper function to set field value by label
+            function setFieldByLabel(labelText, value) {
+                const labels = Array.from(document.querySelectorAll('label'));
+                const label = labels.find(l => l.textContent.includes(labelText));
+                if (label && label.parentElement) {
+                    const input = label.parentElement.querySelector('input, select, textarea');
+                    if (input) {
+                        if (input.tagName === 'SELECT') {
+                            input.value = value;
+                        } else {
+                            input.value = value;
+                        }
+                    }
+                }
+            }
+            
+            // Personal Information
+            setFieldByLabel('Name', 'John');
+            setFieldByLabel('Surname', 'Doe');
+            setFieldByLabel('Alias Name', 'Johnny');
+            setFieldByLabel('Gender', 'Male');
+            setFieldByLabel('Nationality', 'Indian');
+            
+            // Date of Birth and Age
+            const dobInput = document.getElementById('dobComplainant');
+            if (dobInput) {
+                const dob = new Date(1990, 0, 15);
+                dobInput.value = dob.toISOString().split('T')[0];
+            }
+            setFieldByLabel('Age', '34');
+            
+            // Present Address
+            document.getElementById('presentHouseNo').value = '123';
+            document.getElementById('presentStreet').value = 'Main Street';
+            document.getElementById('presentWard').value = 'Ward 5';
+            document.getElementById('presentLandmark').value = 'Near City Park';
+            document.getElementById('presentCountry').value = 'India';
+            // State and District are already set as default selected
+            const presentState = document.getElementById('presentState');
+            if (presentState) presentState.value = 'Telangana';
+            const presentDistrict = document.getElementById('presentDistrict');
+            if (presentDistrict) presentDistrict.value = 'Hyderabad';
+            document.getElementById('presentArea').value = 'Secunderabad';
+            document.getElementById('presentLocality').value = 'Banjara Hills';
+            document.getElementById('presentPin').value = '500034';
+            
+            // Permanent Address
+            document.getElementById('permanentHouseNo').value = '123';
+            document.getElementById('permanentStreet').value = 'Main Street';
+            document.getElementById('permanentWard').value = 'Ward 5';
+            document.getElementById('permanentLandmark').value = 'Near City Park';
+            document.getElementById('permanentCountry').value = 'India';
+            // State and District are already set as default selected
+            const permanentState = document.getElementById('permanentState');
+            if (permanentState) permanentState.value = 'Telangana';
+            const permanentDistrict = document.getElementById('permanentDistrict');
+            if (permanentDistrict) permanentDistrict.value = 'Hyderabad';
+            document.getElementById('permanentArea').value = 'Secunderabad';
+            document.getElementById('permanentLocality').value = 'Banjara Hills';
+            document.getElementById('permanentPin').value = '500034';
+            
+            // Contact Details
+            const phoneCode = document.querySelector('.phone-code');
+            const phoneNumber = document.querySelector('.phone-number');
+            if (phoneCode) phoneCode.value = '91';
+            if (phoneNumber) phoneNumber.value = '9876543210';
+            
+            setFieldByLabel('Email ID', 'john.doe@example.com');
+            
+            ToastService.success('Complainant form filled with demo data!');
+        }
+
+        // Fill Accused Form with Demo Data
+        function fillAccusedDemoData() {
+            const accusedForm = document.getElementById('accordion-accused');
+            if (!accusedForm) return;
+
+            // Helper function to set field value by label within accused form
+            function setFieldByLabel(labelText, value) {
+                const labels = Array.from(accusedForm.querySelectorAll('label'));
+                const label = labels.find(l => l.textContent.includes(labelText));
+                if (label && label.parentElement) {
+                    const input = label.parentElement.querySelector('input, select, textarea');
+                    if (input) {
+                        if (input.tagName === 'SELECT') {
+                            // Try to find option with matching value or text
+                            const option = Array.from(input.options).find(opt => 
+                                opt.value === value || opt.textContent.includes(value)
+                            );
+                            if (option) {
+                                input.value = option.value;
+                            } else {
+                                input.value = value;
+                            }
+                        } else {
+                            input.value = value;
+                        }
+                    }
+                }
+            }
+            
+            // Accused Type - find the select in the header section
+            const headerSelects = accusedForm.querySelectorAll('.accused-header-section select');
+            if (headerSelects.length > 0) {
+                // First select is usually the category, second might be accused type
+                // Let's find the one with Accused Type label
+                const accusedTypeLabel = accusedForm.querySelector('label:has-text("Accused Type")');
+                if (accusedTypeLabel) {
+                    const select = accusedTypeLabel.parentElement?.querySelector('select');
+                    if (select) {
+                        const option = Array.from(select.options).find(opt => opt.value === 'Accused' || opt.textContent.includes('Accused'));
+                        if (option) select.value = option.value;
+                    }
+                }
+            }
+            
+            // Personal Details
+            setFieldByLabel('Name', 'Jane');
+            setFieldByLabel('Surname', 'Smith');
+            setFieldByLabel('Alias Name', 'Janie');
+            setFieldByLabel('Gender', 'Female');
+            setFieldByLabel('Nationality', 'Indian');
+            setFieldByLabel('Age', '28');
+            
+            // Address fields in Accused form
+            const addressInputs = accusedForm.querySelectorAll('input[type="text"]');
+            addressInputs.forEach((input) => {
+                const formGroup = input.closest('.form-group');
+                if (formGroup) {
+                    const label = formGroup.querySelector('label');
+                    if (label) {
+                        const labelText = label.textContent;
+                        if (labelText.includes('House No') || labelText.includes('House Number')) input.value = '456';
+                        if (labelText.includes('Street') || labelText.includes('Road')) input.value = 'Park Avenue';
+                        if (labelText.includes('Ward/Colony')) input.value = 'Ward 10';
+                        if (labelText.includes('Landmark')) input.value = 'Near Mall';
+                        if (labelText.includes('Area/Mandal')) input.value = 'Hitech City';
+                        if (labelText.includes('Locality') || labelText.includes('Village')) input.value = 'Madhapur';
+                        if (labelText.includes('PIN Code') || labelText.includes('Pin Code')) input.value = '500081';
+                    }
+                }
+            });
+            
+            const addressSelects = accusedForm.querySelectorAll('select');
+            addressSelects.forEach(select => {
+                const formGroup = select.closest('.form-group');
+                if (formGroup) {
+                    const label = formGroup.querySelector('label');
+                    if (label) {
+                        const labelText = label.textContent;
+                        if (labelText.includes('Country')) {
+                            const option = Array.from(select.options).find(opt => opt.value === 'India' || opt.textContent.includes('India'));
+                            if (option) select.value = option.value;
+                        }
+                        if (labelText.includes('State/UT') || labelText.includes('State')) {
+                            // Telangana is already set as default, but ensure it's selected
+                            select.value = 'Telangana';
+                        }
+                        if (labelText.includes('District')) {
+                            // Hyderabad is already set as default, but ensure it's selected
+                            select.value = 'Hyderabad';
+                        }
+                    }
+                }
+            });
+            
+            ToastService.success('Accused form filled with demo data!');
+        }
+
+        // Validate Complainant Form
+        function validateComplainantForm() {
+            const missingFields = [];
+            
+            // Helper function to get field value by label
+            function getFieldValueByLabel(labelText) {
+                const labels = Array.from(document.querySelectorAll('label'));
+                const label = labels.find(l => l.textContent.includes(labelText) && l.classList.contains('required-field'));
+                if (label && label.parentElement) {
+                    const input = label.parentElement.querySelector('input, select, textarea');
+                    return input?.value?.trim() || '';
+                }
+                return '';
+            }
+            
+            // Check Name
+            const nameValue = getFieldValueByLabel('Name');
+            if (!nameValue) {
+                missingFields.push('Name');
+            }
+            
+            // Check Gender
+            const genderValue = getFieldValueByLabel('Gender');
+            if (!genderValue) {
+                missingFields.push('Gender');
+            }
+            
+            // Check Nationality
+            const nationalityValue = getFieldValueByLabel('Nationality');
+            if (!nationalityValue) {
+                missingFields.push('Nationality');
+            }
+            
+            // Check Present Address fields
+            const presentWard = document.getElementById('presentWard')?.value?.trim() || '';
+            if (!presentWard) {
+                missingFields.push('Present Address - Ward/Colony');
+            }
+            
+            const presentCountry = document.getElementById('presentCountry')?.value || '';
+            if (!presentCountry) {
+                missingFields.push('Present Address - Country');
+            }
+            
+            const presentState = document.getElementById('presentState')?.value || '';
+            if (!presentState) {
+                missingFields.push('Present Address - State/UT');
+            }
+            
+            const presentDistrict = document.getElementById('presentDistrict')?.value || '';
+            if (!presentDistrict) {
+                missingFields.push('Present Address - District');
+            }
+            
+            const presentArea = document.getElementById('presentArea')?.value?.trim() || '';
+            if (!presentArea) {
+                missingFields.push('Present Address - Area/Mandal');
+            }
+            
+            // Check Permanent Address fields
+            const permanentWard = document.getElementById('permanentWard')?.value?.trim() || '';
+            if (!permanentWard) {
+                missingFields.push('Permanent Address - Ward/Colony');
+            }
+            
+            const permanentCountry = document.getElementById('permanentCountry')?.value || '';
+            if (!permanentCountry) {
+                missingFields.push('Permanent Address - Country');
+            }
+            
+            const permanentState = document.getElementById('permanentState')?.value || '';
+            if (!permanentState) {
+                missingFields.push('Permanent Address - State/UT');
+            }
+            
+            const permanentDistrict = document.getElementById('permanentDistrict')?.value || '';
+            if (!permanentDistrict) {
+                missingFields.push('Permanent Address - District');
+            }
+            
+            const permanentArea = document.getElementById('permanentArea')?.value?.trim() || '';
+            if (!permanentArea) {
+                missingFields.push('Permanent Address - Area/Mandal');
+            }
+            
+            // Check Phone Number
+            const phoneCode = document.querySelector('.phone-code')?.value || '';
+            const phoneNumber = document.querySelector('.phone-number')?.value?.trim() || '';
+            if (!phoneCode || !phoneNumber) {
+                missingFields.push('Phone Number');
+            }
+            
+            // Show toast with missing fields
+            if (missingFields.length > 0) {
+                const message = 'Please fill the following mandatory fields: ' + missingFields.join(', ');
+                // Use longer duration for longer messages (4 seconds for better readability)
+                ToastService.warning(message, 4000);
+                return false;
+            }
+            
+            return true;
+        }
+
+        // Save Complainant section
+        async function saveComplainant() {
+            const saveBtn = document.querySelector('.btn-save-complainant');
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            const loadingText = document.getElementById('loadingText');
+            const loadingSubtext = document.getElementById('loadingSubtext');
+
+            // Validate form first
+            if (!validateComplainantForm()) {
+                return;
+            }
+
+            // Disable button and show loading state on button
+            if (saveBtn) {
+                saveBtn.disabled = true;
+                saveBtn.classList.add('loading');
+            }
+
+            // Collect Complainant data
+            const complainantData = {
+                name: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('Name') && l.classList.contains('required-field'));
+                    if (label && label.parentElement) {
+                        const input = label.parentElement.querySelector('input');
+                        return input?.value || '';
+                    }
+                    return '';
+                })(),
+                surname: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('Surname'));
+                    if (label && label.parentElement) {
+                        const input = label.parentElement.querySelector('input');
+                        return input?.value || '';
+                    }
+                    return '';
+                })(),
+                aliasName: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('Alias Name'));
+                    if (label && label.parentElement) {
+                        const input = label.parentElement.querySelector('input');
+                        return input?.value || '';
+                    }
+                    return '';
+                })(),
+                gender: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('Gender') && l.classList.contains('required-field'));
+                    if (label && label.parentElement) {
+                        const select = label.parentElement.querySelector('select');
+                        return select?.value || '';
+                    }
+                    return '';
+                })(),
+                nationality: document.getElementById('presentCountry')?.value || '',
+                dob: document.getElementById('dobComplainant')?.value || '',
+                age: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('Age'));
+                    if (label && label.parentElement) {
+                        const input = label.parentElement.querySelector('input');
+                        return input?.value || '';
+                    }
+                    return '';
+                })(),
+                presentAddress: {
+                    houseNo: document.getElementById('presentHouseNo')?.value || '',
+                    street: document.getElementById('presentStreet')?.value || '',
+                    ward: document.getElementById('presentWard')?.value || '',
+                    landmark: document.getElementById('presentLandmark')?.value || '',
+                    country: document.getElementById('presentCountry')?.value || '',
+                    state: document.getElementById('presentState')?.value || '',
+                    district: document.getElementById('presentDistrict')?.value || '',
+                    area: document.getElementById('presentArea')?.value || '',
+                    locality: document.getElementById('presentLocality')?.value || '',
+                    pin: document.getElementById('presentPin')?.value || ''
+                },
+                permanentAddress: {
+                    houseNo: document.getElementById('permanentHouseNo')?.value || '',
+                    street: document.getElementById('permanentStreet')?.value || '',
+                    ward: document.getElementById('permanentWard')?.value || '',
+                    landmark: document.getElementById('permanentLandmark')?.value || '',
+                    country: document.getElementById('permanentCountry')?.value || '',
+                    state: document.getElementById('permanentState')?.value || '',
+                    district: document.getElementById('permanentDistrict')?.value || '',
+                    area: document.getElementById('permanentArea')?.value || '',
+                    locality: document.getElementById('permanentLocality')?.value || '',
+                    pin: document.getElementById('permanentPin')?.value || ''
+                },
+                phoneCode: document.querySelector('.phone-code')?.value || '',
+                phoneNumber: document.querySelector('.phone-number')?.value || '',
+                email: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('Email ID'));
+                    if (label && label.parentElement) {
+                        const input = label.parentElement.querySelector('input');
+                        return input?.value || '';
+                    }
+                    return '';
+                })()
+            };
+
+            // Show loading overlay
+            if (loadingOverlay) {
+                loadingOverlay.classList.add('show');
+                if (loadingText) loadingText.textContent = 'Saving Complainant Details...';
+                if (loadingSubtext) loadingSubtext.textContent = 'Please wait';
+            }
+
+            try {
+                // Simulate server delay with random delay between 3-15 seconds
+                await ServerDelayService.simulateServerRequest(async () => {
+                    const id = editFIRId || currentFIRId;
+                    if (!id) {
+                        if (loadingOverlay) loadingOverlay.classList.remove('show');
+                        if (saveBtn) {
+                            saveBtn.disabled = false;
+                            saveBtn.classList.remove('loading');
+                        }
+                        ToastService.warning('Please save Acts & Sections first');
+                        return;
+                    }
+
+                    const existingFIR = FIRService.getFIR(id);
+                    
+                    if (existingFIR) {
+                        existingFIR.complainant = complainantData;
+                        if (!existingFIR.completedSections) {
+                            existingFIR.completedSections = [];
+                        }
+                        if (!existingFIR.completedSections.includes(3)) {
+                            existingFIR.completedSections.push(3);
+                        }
+                        existingFIR.updatedAt = new Date().toISOString();
+                        
+                        FIRService.updateFIR(id, existingFIR);
+                    }
+
+                    // Mark section as completed
+                    const complainantAccordion = document.getElementById('accordion-complainant');
+                    if (complainantAccordion) {
+                        complainantAccordion.classList.add('completed');
+                        complainantAccordion.setAttribute('data-completed', 'true');
+                    }
+
+                    // Enable next accordion
+                    enableNextAccordion(3);
+
+                    // Hide loading overlay
+                    if (loadingOverlay) {
+                        loadingOverlay.classList.remove('show');
+                    }
+                    if (saveBtn) {
+                        saveBtn.disabled = false;
+                        saveBtn.classList.remove('loading');
+                    }
+
+                    ToastService.success('Complainant Details saved successfully!');
+                }, 3, 15, (elapsed, total) => {
+                    // Update loading text with progress
+                    const progress = Math.min(Math.round((elapsed / total) * 100), 100);
+                    if (loadingText) {
+                        loadingText.textContent = `Saving Complainant Details... ${progress}%`;
+                    }
+                });
+            } catch (error) {
+                // Hide loading overlay on error
+                if (loadingOverlay) {
+                    loadingOverlay.classList.remove('show');
+                }
+                if (saveBtn) {
+                    saveBtn.disabled = false;
+                    saveBtn.classList.remove('loading');
+                }
+                ToastService.error('Error saving Complainant Details. Please try again.');
+                console.error('Error:', error);
+            }
+        }
+
+        // Save Accused section
+        async function saveAccused() {
+            const saveBtn = document.querySelector('#accordion-accused .btn.btn-primary');
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            const loadingText = document.getElementById('loadingText');
+            const loadingSubtext = document.getElementById('loadingSubtext');
+
+            // Disable button and show loading state on button
+            if (saveBtn) {
+                saveBtn.disabled = true;
+                saveBtn.classList.add('loading');
+            }
+
+            // Collect Accused data
+            const accusedData = {
+                accusedType: (() => {
+                    const select = document.querySelector('#accordion-accused select');
+                    if (select && select.closest('.form-group').querySelector('label').textContent.includes('Accused Type')) {
+                        return select.value || '';
+                    }
+                    return '';
+                })(),
+                name: (() => {
+                    const labels = Array.from(document.querySelectorAll('#accordion-accused label'));
+                    const label = labels.find(l => l.textContent.includes('Name') && l.classList.contains('required-field'));
+                    if (label && label.parentElement) {
+                        const input = label.parentElement.querySelector('input');
+                        return input?.value || '';
+                    }
+                    return '';
+                })(),
+                surname: (() => {
+                    const labels = Array.from(document.querySelectorAll('#accordion-accused label'));
+                    const label = labels.find(l => l.textContent.includes('Surname'));
+                    if (label && label.parentElement) {
+                        const input = label.parentElement.querySelector('input');
+                        return input?.value || '';
+                    }
+                    return '';
+                })(),
+                gender: (() => {
+                    const labels = Array.from(document.querySelectorAll('#accordion-accused label'));
+                    const label = labels.find(l => l.textContent.includes('Gender') && l.classList.contains('required-field'));
+                    if (label && label.parentElement) {
+                        const select = label.parentElement.querySelector('select');
+                        return select?.value || '';
+                    }
+                    return '';
+                })(),
+                nationality: (() => {
+                    const labels = Array.from(document.querySelectorAll('#accordion-accused label'));
+                    const label = labels.find(l => l.textContent.includes('Nationality') && l.classList.contains('required-field'));
+                    if (label && label.parentElement) {
+                        const select = label.parentElement.querySelector('select');
+                        return select?.value || '';
+                    }
+                    return '';
+                })(),
+                age: (() => {
+                    const labels = Array.from(document.querySelectorAll('#accordion-accused label'));
+                    const label = labels.find(l => l.textContent.includes('Age'));
+                    if (label && label.parentElement) {
+                        const input = label.parentElement.querySelector('input');
+                        return input?.value || '';
+                    }
+                    return '';
+                })()
+            };
+
+            // Show loading overlay
+            if (loadingOverlay) {
+                loadingOverlay.classList.add('show');
+                if (loadingText) loadingText.textContent = 'Saving Accused Details...';
+                if (loadingSubtext) loadingSubtext.textContent = 'Please wait';
+            }
+
+            try {
+                // Simulate server delay with random delay between 3-15 seconds
+                await ServerDelayService.simulateServerRequest(async () => {
+                    const id = editFIRId || currentFIRId;
+                    if (!id) {
+                        if (loadingOverlay) loadingOverlay.classList.remove('show');
+                        if (saveBtn) {
+                            saveBtn.disabled = false;
+                            saveBtn.classList.remove('loading');
+                        }
+                        ToastService.warning('Please save Acts & Sections first');
+                        return;
+                    }
+
+                    const existingFIR = FIRService.getFIR(id);
+                    
+                    if (existingFIR) {
+                        existingFIR.accused = accusedData;
+                        if (!existingFIR.completedSections) {
+                            existingFIR.completedSections = [];
+                        }
+                        if (!existingFIR.completedSections.includes(4)) {
+                            existingFIR.completedSections.push(4);
+                        }
+                        existingFIR.updatedAt = new Date().toISOString();
+                        
+                        FIRService.updateFIR(id, existingFIR);
+                    }
+
+                    // Mark section as completed
+                    const accusedAccordion = document.getElementById('accordion-accused');
+                    if (accusedAccordion) {
+                        accusedAccordion.classList.add('completed');
+                        accusedAccordion.setAttribute('data-completed', 'true');
+                    }
+
+                    // Enable next accordion
+                    enableNextAccordion(4);
+
+                    // Hide loading overlay
+                    if (loadingOverlay) {
+                        loadingOverlay.classList.remove('show');
+                    }
+                    if (saveBtn) {
+                        saveBtn.disabled = false;
+                        saveBtn.classList.remove('loading');
+                    }
+
+                    ToastService.success('Accused Details saved successfully!');
+                }, 3, 15, (elapsed, total) => {
+                    // Update loading text with progress
+                    const progress = Math.min(Math.round((elapsed / total) * 100), 100);
+                    if (loadingText) {
+                        loadingText.textContent = `Saving Accused Details... ${progress}%`;
+                    }
+                });
+            } catch (error) {
+                // Hide loading overlay on error
+                if (loadingOverlay) {
+                    loadingOverlay.classList.remove('show');
+                }
+                if (saveBtn) {
+                    saveBtn.disabled = false;
+                    saveBtn.classList.remove('loading');
+                }
+                ToastService.error('Error saving Accused Details. Please try again.');
+                console.error('Error:', error);
+            }
         }
 
         // GD Entry Modal Functions
