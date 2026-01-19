@@ -3732,99 +3732,284 @@
         }
 
         // Update Complainant Info Card
-        function updateComplainantInfoCard(complainantData) {
+        function updateComplainantInfoCard(complainantsArray) {
             const infoCard = document.querySelector('.complainant-info-card');
             if (!infoCard) return;
 
-            // Clear existing content except title
-            const title = infoCard.querySelector('.card-title');
+            // Ensure we have an array
+            const complainants = Array.isArray(complainantsArray) ? complainantsArray : [complainantsArray].filter(Boolean);
+
+            // Clear existing content
             infoCard.innerHTML = '';
-            if (title) {
-                infoCard.appendChild(title);
-            } else {
-                const newTitle = document.createElement('h4');
-                newTitle.className = 'card-title';
-                newTitle.textContent = 'Complainant Details';
-                infoCard.appendChild(newTitle);
-            }
-
-            // Build full name
-            const fullName = [complainantData.name, complainantData.surname].filter(Boolean).join(' ');
-            if (fullName) {
-                const nameItem = document.createElement('div');
-                nameItem.className = 'info-item';
-                nameItem.innerHTML = `
-                    <span class="info-label">${fullName}</span>
-                    <div class="info-actions">
-                        <a href="#" class="info-link"><i class="fas fa-eye"></i> View</a>
-                        <a href="#" class="info-link"><i class="fas fa-pencil-alt"></i> Edit</a>
-                    </div>
-                `;
-                infoCard.appendChild(nameItem);
-            }
-
-            // Gender and Age
-            const genderAge = [complainantData.gender, complainantData.age ? `${complainantData.age} Years` : ''].filter(Boolean).join(', ');
-            if (genderAge) {
-                const genderAgeItem = document.createElement('div');
-                genderAgeItem.className = 'info-item';
-                genderAgeItem.innerHTML = `<span class="info-label">${genderAge}</span>`;
-                infoCard.appendChild(genderAgeItem);
-            }
-
-            // Occupation (if available)
-            const occupation = complainantData.occupation || '';
-            if (occupation) {
-                const occupationItem = document.createElement('div');
-                occupationItem.className = 'info-item';
-                occupationItem.innerHTML = `<span class="info-label">${occupation}</span>`;
-                infoCard.appendChild(occupationItem);
-            }
-
-            // Phone Number
-            const phoneNumber = complainantData.phoneCode && complainantData.phoneNumber 
-                ? `${complainantData.phoneCode} ${complainantData.phoneNumber}` 
-                : (complainantData.phoneNumber || '');
-            if (phoneNumber) {
-                const phoneItem = document.createElement('div');
-                phoneItem.className = 'info-item';
-                phoneItem.innerHTML = `<span class="info-label">${phoneNumber}</span>`;
-                infoCard.appendChild(phoneItem);
-            }
-
-            // Present Address
-            const presentAddr = complainantData.presentAddress;
-            if (presentAddr) {
-                const addrParts = [
-                    presentAddr.area,
-                    presentAddr.locality,
-                    presentAddr.district
-                ].filter(Boolean);
-                if (addrParts.length > 0) {
-                    const addrItem = document.createElement('div');
-                    addrItem.className = 'info-item';
-                    addrItem.innerHTML = `<span class="info-label">${addrParts.join(', ')}</span>`;
-                    infoCard.appendChild(addrItem);
-                }
-
-                // PIN Code
-                if (presentAddr.pin) {
-                    const pinItem = document.createElement('div');
-                    pinItem.className = 'info-item';
-                    const pinParts = [presentAddr.district, presentAddr.pin].filter(Boolean);
-                    pinItem.innerHTML = `<span class="info-label">${pinParts.join(', ')}</span>`;
-                    infoCard.appendChild(pinItem);
-                }
-            }
             
-            // If no data was added, show default message
-            if (infoCard.querySelectorAll('.info-item').length === 0) {
+            // Add title
+            const title = document.createElement('h4');
+            title.className = 'card-title';
+            title.textContent = 'Complainant Details';
+            infoCard.appendChild(title);
+
+            // If no complainants, show default message
+            if (complainants.length === 0) {
                 const defaultItem = document.createElement('div');
                 defaultItem.className = 'info-item';
                 defaultItem.innerHTML = `<span class="info-label">No complainant added yet</span>`;
                 infoCard.appendChild(defaultItem);
+                return;
+            }
+
+            // Display each complainant
+            complainants.forEach((complainantData, index) => {
+                // Create a card for each complainant
+                const complainantCard = document.createElement('div');
+                complainantCard.className = 'info-item';
+                complainantCard.style.borderBottom = '1px solid #f0f0f0';
+                complainantCard.style.paddingBottom = '10px';
+                complainantCard.style.marginBottom = '10px';
+
+                // Build full name
+                const fullName = [complainantData.name, complainantData.surname].filter(Boolean).join(' ') || 'Unnamed';
+                
+                const nameRow = document.createElement('div');
+                nameRow.style.display = 'flex';
+                nameRow.style.justifyContent = 'space-between';
+                nameRow.style.alignItems = 'center';
+                nameRow.style.marginBottom = '8px';
+                
+                const nameLabel = document.createElement('span');
+                nameLabel.className = 'info-label';
+                nameLabel.style.fontWeight = '600';
+                nameLabel.textContent = `${index + 1}. ${fullName}`;
+                
+                const actions = document.createElement('div');
+                actions.className = 'info-actions';
+                actions.innerHTML = `
+                    <a href="#" class="info-link" onclick="viewComplainant('${complainantData.id || index}'); return false;"><i class="fas fa-eye"></i> View</a>
+                    <a href="#" class="info-link" onclick="editComplainant('${complainantData.id || index}'); return false;"><i class="fas fa-pencil-alt"></i> Edit</a>
+                    <a href="#" class="info-link" onclick="deleteComplainant('${complainantData.id || index}'); return false;" style="color: #d32f2f;"><i class="fas fa-trash"></i> Delete</a>
+                `;
+                
+                nameRow.appendChild(nameLabel);
+                nameRow.appendChild(actions);
+                complainantCard.appendChild(nameRow);
+
+                // Gender and Age
+                const genderAge = [complainantData.gender, complainantData.age ? `${complainantData.age} Years` : ''].filter(Boolean).join(', ');
+                if (genderAge) {
+                    const genderAgeItem = document.createElement('div');
+                    genderAgeItem.className = 'info-label';
+                    genderAgeItem.style.fontSize = '12px';
+                    genderAgeItem.style.color = '#666';
+                    genderAgeItem.style.marginBottom = '4px';
+                    genderAgeItem.textContent = genderAge;
+                    complainantCard.appendChild(genderAgeItem);
+                }
+
+                // Phone Number
+                const phoneNumber = complainantData.phoneCode && complainantData.phoneNumber 
+                    ? `${complainantData.phoneCode} ${complainantData.phoneNumber}` 
+                    : (complainantData.phoneNumber || '');
+                if (phoneNumber) {
+                    const phoneItem = document.createElement('div');
+                    phoneItem.className = 'info-label';
+                    phoneItem.style.fontSize = '12px';
+                    phoneItem.style.color = '#666';
+                    phoneItem.style.marginBottom = '4px';
+                    phoneItem.textContent = phoneNumber;
+                    complainantCard.appendChild(phoneItem);
+                }
+
+                // Address summary
+                const presentAddr = complainantData.presentAddress;
+                if (presentAddr && (presentAddr.area || presentAddr.district)) {
+                    const addrParts = [
+                        presentAddr.area,
+                        presentAddr.district
+                    ].filter(Boolean);
+                    if (addrParts.length > 0) {
+                        const addrItem = document.createElement('div');
+                        addrItem.className = 'info-label';
+                        addrItem.style.fontSize = '12px';
+                        addrItem.style.color = '#666';
+                        addrItem.textContent = addrParts.join(', ');
+                        complainantCard.appendChild(addrItem);
+                    }
+                }
+
+                infoCard.appendChild(complainantCard);
+            });
+        }
+
+        // Clear Complainant Form
+        function clearComplainantForm() {
+            // Clear all input fields in complainant form
+            const complainantForm = document.querySelector('#accordion-complainant');
+            if (complainantForm) {
+                const inputs = complainantForm.querySelectorAll('input[type="text"], input[type="email"], input[type="date"], textarea');
+                inputs.forEach(input => {
+                    if (input.id !== 'dobComplainant' || true) { // Clear all including DOB
+                        input.value = '';
+                    }
+                });
+                
+                const selects = complainantForm.querySelectorAll('select');
+                selects.forEach(select => {
+                    // Reset to default selected values (Telangana, Hyderabad) or empty
+                    if (select.id === 'presentState' || select.id === 'permanentState') {
+                        select.value = 'Telangana';
+                    } else if (select.id === 'presentDistrict' || select.id === 'permanentDistrict') {
+                        select.value = 'Hyderabad';
+                    } else if (select.id === 'presentCountry' || select.id === 'permanentCountry') {
+                        select.value = '';
+                    } else {
+                        select.selectedIndex = 0;
+                    }
+                });
             }
         }
+
+        // View Complainant
+        window.viewComplainant = function(complainantId) {
+            const id = editFIRId || currentFIRId;
+            if (!id) return;
+            
+            const existingFIR = FIRService.getFIR(id);
+            if (!existingFIR || !existingFIR.complainants) return;
+            
+            const complainant = existingFIR.complainants.find(c => (c.id || '').toString() === complainantId.toString()) || 
+                               existingFIR.complainants[parseInt(complainantId)];
+            
+            if (complainant) {
+                // Show complainant details in a modal or alert
+                const details = [
+                    `Name: ${[complainant.name, complainant.surname].filter(Boolean).join(' ')}`,
+                    `Gender: ${complainant.gender || 'N/A'}`,
+                    `Age: ${complainant.age || 'N/A'}`,
+                    `Phone: ${complainant.phoneCode || ''} ${complainant.phoneNumber || ''}`,
+                    `Address: ${complainant.presentAddress?.area || ''}, ${complainant.presentAddress?.district || ''}`
+                ].filter(line => !line.includes('N/A') && line.split(':')[1]?.trim()).join('\n');
+                
+                ToastService.info(details, 5000);
+            }
+        };
+
+        // Edit Complainant
+        window.editComplainant = function(complainantId) {
+            const id = editFIRId || currentFIRId;
+            if (!id) return;
+            
+            const existingFIR = FIRService.getFIR(id);
+            if (!existingFIR || !existingFIR.complainants) return;
+            
+            const complainant = existingFIR.complainants.find(c => (c.id || '').toString() === complainantId.toString()) || 
+                               existingFIR.complainants[parseInt(complainantId)];
+            
+            if (complainant) {
+                // Populate form with complainant data
+                // Helper function to set field value by label
+                function setFieldByLabel(labelText, value) {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes(labelText));
+                    if (label && label.parentElement) {
+                        const input = label.parentElement.querySelector('input, select, textarea');
+                        if (input) {
+                            if (input.tagName === 'SELECT') {
+                                input.value = value;
+                            } else {
+                                input.value = value;
+                            }
+                        }
+                    }
+                }
+                
+                setFieldByLabel('Name', complainant.name || '');
+                setFieldByLabel('Surname', complainant.surname || '');
+                setFieldByLabel('Alias Name', complainant.aliasName || '');
+                setFieldByLabel('Gender', complainant.gender || '');
+                setFieldByLabel('Nationality', complainant.nationality || '');
+                setFieldByLabel('Age', complainant.age || '');
+                
+                if (complainant.dob) {
+                    const dobInput = document.getElementById('dobComplainant');
+                    if (dobInput) dobInput.value = complainant.dob;
+                }
+                
+                // Set address fields
+                if (complainant.presentAddress) {
+                    document.getElementById('presentHouseNo').value = complainant.presentAddress.houseNo || '';
+                    document.getElementById('presentStreet').value = complainant.presentAddress.street || '';
+                    document.getElementById('presentWard').value = complainant.presentAddress.ward || '';
+                    document.getElementById('presentLandmark').value = complainant.presentAddress.landmark || '';
+                    document.getElementById('presentCountry').value = complainant.presentAddress.country || '';
+                    document.getElementById('presentState').value = complainant.presentAddress.state || 'Telangana';
+                    document.getElementById('presentDistrict').value = complainant.presentAddress.district || 'Hyderabad';
+                    document.getElementById('presentArea').value = complainant.presentAddress.area || '';
+                    document.getElementById('presentLocality').value = complainant.presentAddress.locality || '';
+                    document.getElementById('presentPin').value = complainant.presentAddress.pin || '';
+                }
+                
+                if (complainant.permanentAddress) {
+                    document.getElementById('permanentHouseNo').value = complainant.permanentAddress.houseNo || '';
+                    document.getElementById('permanentStreet').value = complainant.permanentAddress.street || '';
+                    document.getElementById('permanentWard').value = complainant.permanentAddress.ward || '';
+                    document.getElementById('permanentLandmark').value = complainant.permanentAddress.landmark || '';
+                    document.getElementById('permanentCountry').value = complainant.permanentAddress.country || '';
+                    document.getElementById('permanentState').value = complainant.permanentAddress.state || 'Telangana';
+                    document.getElementById('permanentDistrict').value = complainant.permanentAddress.district || 'Hyderabad';
+                    document.getElementById('permanentArea').value = complainant.permanentAddress.area || '';
+                    document.getElementById('permanentLocality').value = complainant.permanentAddress.locality || '';
+                    document.getElementById('permanentPin').value = complainant.permanentAddress.pin || '';
+                }
+                
+                // Set phone
+                const phoneCode = document.querySelector('.phone-code');
+                const phoneNumber = document.querySelector('.phone-number');
+                if (phoneCode) phoneCode.value = complainant.phoneCode || '';
+                if (phoneNumber) phoneNumber.value = complainant.phoneNumber || '';
+                
+                // Store the ID of complainant being edited
+                window.editingComplainantId = complainant.id || complainantId;
+                
+                ToastService.info('Complainant data loaded. You can edit and save to update.');
+            }
+        };
+
+        // Delete Complainant
+        window.deleteComplainant = function(complainantId) {
+            ToastService.confirm(
+                'Are you sure you want to delete this complainant?',
+                () => {
+                    const id = editFIRId || currentFIRId;
+                    if (!id) return;
+                    
+                    const existingFIR = FIRService.getFIR(id);
+                    if (!existingFIR || !existingFIR.complainants) return;
+                    
+                    // Remove complainant from array
+                    existingFIR.complainants = existingFIR.complainants.filter(c => 
+                        (c.id || '').toString() !== complainantId.toString() && 
+                        existingFIR.complainants.indexOf(c) !== parseInt(complainantId)
+                    );
+                    
+                    // Update the last complainant for backward compatibility
+                    if (existingFIR.complainants.length > 0) {
+                        existingFIR.complainant = existingFIR.complainants[existingFIR.complainants.length - 1];
+                    } else {
+                        delete existingFIR.complainant;
+                    }
+                    
+                    existingFIR.updatedAt = new Date().toISOString();
+                    FIRService.updateFIR(id, existingFIR);
+                    
+                    // Update the card display
+                    updateComplainantInfoCard(existingFIR.complainants);
+                    
+                    ToastService.success('Complainant deleted successfully!');
+                },
+                () => {
+                    // Cancelled
+                }
+            );
+        };
 
         // Validate Complainant Form
         function validateComplainantForm() {
@@ -4068,7 +4253,35 @@
                     const existingFIR = FIRService.getFIR(id);
                     
                     if (existingFIR) {
-                        existingFIR.complainant = complainantData;
+                        // Initialize complainants as array if it doesn't exist
+                        if (!existingFIR.complainants) {
+                            existingFIR.complainants = [];
+                        }
+                        
+                        // Check if we're editing an existing complainant
+                        if (window.editingComplainantId) {
+                            // Update existing complainant
+                            const index = existingFIR.complainants.findIndex(c => 
+                                (c.id || '').toString() === window.editingComplainantId.toString()
+                            );
+                            if (index !== -1) {
+                                complainantData.id = window.editingComplainantId;
+                                complainantData.createdAt = existingFIR.complainants[index].createdAt || new Date().toISOString();
+                                complainantData.updatedAt = new Date().toISOString();
+                                existingFIR.complainants[index] = complainantData;
+                            }
+                            delete window.editingComplainantId;
+                        } else {
+                            // Add new complainant to array (don't overwrite)
+                            complainantData.id = complainantData.id || Date.now().toString();
+                            complainantData.createdAt = complainantData.createdAt || new Date().toISOString();
+                            complainantData.updatedAt = new Date().toISOString();
+                            existingFIR.complainants.push(complainantData);
+                        }
+                        
+                        // Also keep single complainant for backward compatibility (latest one)
+                        existingFIR.complainant = existingFIR.complainants[existingFIR.complainants.length - 1];
+                        
                         if (!existingFIR.completedSections) {
                             existingFIR.completedSections = [];
                         }
@@ -4090,8 +4303,16 @@
                     // Enable next accordion
                     enableNextAccordion(3);
 
-                    // Update complainant info card
-                    updateComplainantInfoCard(complainantData);
+                    // Update complainant info card with all complainants
+                    updateComplainantInfoCard(existingFIR.complainants);
+                    
+                    // Clear form after saving (unless editing)
+                    if (!window.editingComplainantId) {
+                        clearComplainantForm();
+                    } else {
+                        // Remove editing flag
+                        delete window.editingComplainantId;
+                    }
 
                     // Hide loading overlay
                     if (loadingOverlay) {
