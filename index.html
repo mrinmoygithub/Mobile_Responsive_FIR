@@ -3731,6 +3731,101 @@
             ToastService.success('Accused form filled with demo data!');
         }
 
+        // Update Complainant Info Card
+        function updateComplainantInfoCard(complainantData) {
+            const infoCard = document.querySelector('.complainant-info-card');
+            if (!infoCard) return;
+
+            // Clear existing content except title
+            const title = infoCard.querySelector('.card-title');
+            infoCard.innerHTML = '';
+            if (title) {
+                infoCard.appendChild(title);
+            } else {
+                const newTitle = document.createElement('h4');
+                newTitle.className = 'card-title';
+                newTitle.textContent = 'Complainant Details';
+                infoCard.appendChild(newTitle);
+            }
+
+            // Build full name
+            const fullName = [complainantData.name, complainantData.surname].filter(Boolean).join(' ');
+            if (fullName) {
+                const nameItem = document.createElement('div');
+                nameItem.className = 'info-item';
+                nameItem.innerHTML = `
+                    <span class="info-label">${fullName}</span>
+                    <div class="info-actions">
+                        <a href="#" class="info-link"><i class="fas fa-eye"></i> View</a>
+                        <a href="#" class="info-link"><i class="fas fa-pencil-alt"></i> Edit</a>
+                    </div>
+                `;
+                infoCard.appendChild(nameItem);
+            }
+
+            // Gender and Age
+            const genderAge = [complainantData.gender, complainantData.age ? `${complainantData.age} Years` : ''].filter(Boolean).join(', ');
+            if (genderAge) {
+                const genderAgeItem = document.createElement('div');
+                genderAgeItem.className = 'info-item';
+                genderAgeItem.innerHTML = `<span class="info-label">${genderAge}</span>`;
+                infoCard.appendChild(genderAgeItem);
+            }
+
+            // Occupation (if available)
+            const occupation = complainantData.occupation || '';
+            if (occupation) {
+                const occupationItem = document.createElement('div');
+                occupationItem.className = 'info-item';
+                occupationItem.innerHTML = `<span class="info-label">${occupation}</span>`;
+                infoCard.appendChild(occupationItem);
+            }
+
+            // Phone Number
+            const phoneNumber = complainantData.phoneCode && complainantData.phoneNumber 
+                ? `${complainantData.phoneCode} ${complainantData.phoneNumber}` 
+                : (complainantData.phoneNumber || '');
+            if (phoneNumber) {
+                const phoneItem = document.createElement('div');
+                phoneItem.className = 'info-item';
+                phoneItem.innerHTML = `<span class="info-label">${phoneNumber}</span>`;
+                infoCard.appendChild(phoneItem);
+            }
+
+            // Present Address
+            const presentAddr = complainantData.presentAddress;
+            if (presentAddr) {
+                const addrParts = [
+                    presentAddr.area,
+                    presentAddr.locality,
+                    presentAddr.district
+                ].filter(Boolean);
+                if (addrParts.length > 0) {
+                    const addrItem = document.createElement('div');
+                    addrItem.className = 'info-item';
+                    addrItem.innerHTML = `<span class="info-label">${addrParts.join(', ')}</span>`;
+                    infoCard.appendChild(addrItem);
+                }
+
+                // PIN Code
+                if (presentAddr.pin) {
+                    const pinItem = document.createElement('div');
+                    pinItem.className = 'info-item';
+                    const pinParts = [presentAddr.district, presentAddr.pin].filter(Boolean);
+                    pinItem.innerHTML = `<span class="info-label">${pinParts.join(', ')}</span>`;
+                    infoCard.appendChild(pinItem);
+                }
+            }
+            
+            // If no data was added, show default message
+            if (infoCard.querySelectorAll('.info-item').length === 0) {
+                const defaultItem = document.createElement('div');
+                defaultItem.className = 'info-item';
+                defaultItem.innerHTML = `<span class="info-label">No complainant added yet</span>`;
+                infoCard.appendChild(defaultItem);
+            }
+        }
+
         // Validate Complainant Form
         function validateComplainantForm() {
             const missingFields = [];
@@ -3935,6 +4030,17 @@
                         return input?.value || '';
                     }
                     return '';
+                })(),
+                occupation: (() => {
+                    const labels = Array.from(document.querySelectorAll('label'));
+                    const label = labels.find(l => l.textContent.includes('Occupation'));
+                    if (label && label.parentElement) {
+                        const select = label.parentElement.querySelector('select');
+                        if (select && select.selectedIndex > 0) {
+                            return select.options[select.selectedIndex].textContent;
+                        }
+                    }
+                    return '';
                 })()
             };
 
@@ -3983,6 +4089,9 @@
 
                     // Enable next accordion
                     enableNextAccordion(3);
+
+                    // Update complainant info card
+                    updateComplainantInfoCard(complainantData);
 
                     // Hide loading overlay
                     if (loadingOverlay) {
